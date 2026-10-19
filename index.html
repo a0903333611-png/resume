@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>陳弘明 (Chen, Hong-Ming) — 個人履歷</title>
+  <title>陳弘明 (Chen, Hong-Ming) — 專業工程履歷</title>
   <style>
     :root {
-      /* Apple Pro Dark Palette */
-      --bg-primary: #000000;
-      --bg-secondary: #0a0a0c;
-      --card-bg: rgba(28, 28, 30, 0.72);
-      --card-bg-hover: rgba(44, 44, 46, 0.85);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --card-border-hover: rgba(255, 255, 255, 0.22);
-      --card-inner-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      /* Black & Orange Industrial Tech Theme */
+      --bg-dark: #070709;
+      --bg-carbon: #0f0f13;
+      --card-bg: rgba(22, 22, 27, 0.78);
+      --card-bg-hover: rgba(30, 30, 38, 0.92);
       
-      --text-primary: #f5f5f7;
-      --text-secondary: #86868b;
-      --text-tertiary: #6e6e73;
+      --orange-primary: #ff6b00;
+      --orange-glow: #ff7a1a;
+      --orange-amber: #f59e0b;
+      --orange-deep: #ea580c;
+      --orange-light: #ffedd5;
       
-      --apple-blue: #2997ff;
-      --apple-blue-hover: #0077ed;
-      --apple-green: #30d158;
-      --apple-yellow: #ffd60a;
-      --apple-orange: #ff9f0a;
+      --border-orange: rgba(255, 107, 0, 0.22);
+      --border-orange-hover: rgba(255, 107, 0, 0.55);
+      --border-glow: 0 0 25px rgba(255, 107, 0, 0.2);
       
-      --nav-height: 52px;
-      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      --text-white: #ffffff;
+      --text-light: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-darker: #6b7280;
+
+      --float-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 107, 0, 0.08);
+      --float-shadow-hover: 0 30px 60px -12px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 107, 0, 0.28);
+      --inner-rim: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 107, 0, 0.05);
+
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "SF Pro Display", "PingFang TC", "Microsoft JhengHei", sans-serif;
     }
 
     * {
@@ -37,88 +42,113 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--nav-height) + 24px);
-      background-color: var(--bg-primary);
+      scroll-padding-top: 100px;
+      background-color: var(--bg-dark);
     }
 
     body {
       font-family: var(--font-family);
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.65;
       min-height: 100vh;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 10% 40%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 90% 70%, rgba(234, 88, 12, 0.08) 0%, transparent 55%);
+      background-attachment: fixed;
     }
 
-    /* Apple Top Scroll Progress Indicator */
+    /* Ambient Drifting Floating Orbs */
+    .ambient-drift {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      animation: driftFloat 18s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      top: 5%;
+      left: 20%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(255, 107, 0, 0.18), transparent 70%);
+      animation-duration: 16s;
+    }
+
+    .orb-2 {
+      top: 50%;
+      right: 10%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(234, 88, 12, 0.14), transparent 70%);
+      animation-duration: 20s;
+    }
+
+    .orb-3 {
+      bottom: 5%;
+      left: 10%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
+      animation-duration: 22s;
+    }
+
+    @keyframes driftFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -25px) scale(1.08); }
+      100% { transform: translate(-25px, 20px) scale(0.95); }
+    }
+
+    /* Floating Reading Progress Lightbar */
     #scroll-progress {
       position: fixed;
       top: 0;
       left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #2997ff, #30d158, #bf5af2);
+      height: 3px;
+      background: linear-gradient(90deg, #ff6b00, #ff9f43, #ff5500);
       width: 0%;
       z-index: 1002;
+      box-shadow: 0 0 14px rgba(255, 107, 0, 0.9);
       transition: width 0.08s linear;
     }
 
-    /* Apple Subtle Ambient Lighting */
-    .ambient-glow {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(140px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.35;
-    }
-
-    .ambient-1 {
-      top: -120px;
-      left: 15%;
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(41, 151, 255, 0.25), transparent 70%);
-    }
-
-    .ambient-2 {
-      top: 40%;
-      right: 5%;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(48, 209, 88, 0.15), transparent 70%);
-    }
-
-    .ambient-3 {
-      bottom: -100px;
-      left: 10%;
-      width: 650px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(191, 90, 242, 0.12), transparent 70%);
-    }
-
-    /* Apple Sticky Navigation Bar */
-    .apple-nav {
+    /* Floating Detached Island Navbar */
+    .floating-nav-wrapper {
       position: sticky;
-      top: 0;
+      top: 18px;
       z-index: 1000;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transition: background-color 0.3s ease, border-color 0.3s ease;
+      width: 100%;
+      padding: 0 20px;
+      pointer-events: none;
     }
 
-    .nav-content {
-      max-width: 1020px;
+    .floating-nav-island {
+      max-width: 920px;
       margin: 0 auto;
-      height: var(--nav-height);
-      padding: 0 22px;
+      height: 58px;
+      padding: 0 20px;
+      background: rgba(18, 18, 22, 0.82);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid var(--border-orange);
+      border-radius: 980px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 107, 0, 0.15), var(--inner-rim);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      pointer-events: auto;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .floating-nav-island:hover {
+      border-color: rgba(255, 107, 0, 0.45);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 107, 0, 0.25);
     }
 
     .nav-brand {
@@ -126,1129 +156,699 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: var(--text-primary);
-      font-size: 0.95rem;
-      font-weight: 600;
+      color: var(--text-white);
+      font-size: 1rem;
+      font-weight: 700;
       letter-spacing: -0.01em;
-      transition: opacity 0.2s;
+      white-space: nowrap;
     }
 
-    .nav-brand:hover {
-      opacity: 0.85;
-    }
-
-    .nav-fish-icon {
-      width: 28px;
-      height: 28px;
+    .brand-glow-icon {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(234, 88, 12, 0.4));
+      border: 1px solid var(--orange-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
+      color: var(--orange-primary);
+      box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
+      font-size: 0.95rem;
     }
 
-    .nav-fish-icon:hover {
-      transform: scale(1.15) rotate(6deg);
-      border-color: var(--apple-blue);
-    }
-
-    .nav-links {
+    .nav-menu {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
       list-style: none;
     }
 
-    .nav-link {
-      color: var(--text-secondary);
+    .nav-pill {
+      color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.84rem;
-      font-weight: 400;
-      padding: 6px 12px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 6px 14px;
       border-radius: 980px;
-      transition: all 0.2s ease;
-      letter-spacing: -0.01em;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       white-space: nowrap;
     }
 
-    .nav-link:hover {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.06);
+    .nav-pill:hover {
+      color: var(--text-white);
+      background: rgba(255, 107, 0, 0.12);
+      transform: translateY(-2px);
     }
 
-    .nav-link.active {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.12);
-      font-weight: 500;
+    .nav-pill.active {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--orange-primary), var(--orange-deep));
+      box-shadow: 0 4px 16px rgba(255, 107, 0, 0.45);
+      font-weight: 600;
     }
 
-    .nav-link.special-mascot {
-      color: var(--apple-yellow);
-      background: rgba(255, 214, 10, 0.1);
-      border: 1px solid rgba(255, 214, 10, 0.25);
-    }
-
-    .nav-link.special-mascot:hover {
-      background: rgba(255, 214, 10, 0.2);
-    }
-
-    .btn-apple-action {
+    .nav-cta-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 980px;
-      background: var(--apple-blue);
+      background: linear-gradient(135deg, var(--orange-primary), var(--orange-deep));
       color: #ffffff;
       text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 4px 18px rgba(255, 107, 0, 0.35);
+      transition: all 0.25s ease;
       white-space: nowrap;
-      letter-spacing: -0.01em;
     }
 
-    .btn-apple-action:hover {
-      background: var(--apple-blue-hover);
-      transform: scale(1.02);
+    .nav-cta-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(255, 107, 0, 0.55);
     }
 
     /* Main Container */
     .container {
-      max-width: 980px;
+      max-width: 940px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 30px 22px 90px;
       position: relative;
       z-index: 1;
     }
 
-    /* Apple Hero Section */
-    .hero-section {
-      text-align: center;
-      padding: 48px 16px 56px;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--apple-blue);
-      margin-bottom: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-title {
-      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1.1;
-      margin-bottom: 16px;
-      background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
-      font-weight: 500;
-      color: var(--text-primary);
-      letter-spacing: -0.015em;
-      margin-bottom: 14px;
-    }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      max-width: 640px;
-      margin: 0 auto 32px;
-      letter-spacing: -0.01em;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .btn-apple-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 26px;
-      border-radius: 980px;
-      background: #ffffff;
-      color: #000000;
-      text-decoration: none;
-      font-size: 0.96rem;
-      font-weight: 600;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-apple-primary:hover {
-      background: #f0f0f2;
-      transform: scale(1.03);
-      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
-    }
-
-    .btn-apple-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 980px;
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.96rem;
-      font-weight: 500;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      transition: all 0.2s ease;
-    }
-
-    .btn-apple-secondary:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.25);
-      transform: scale(1.02);
-    }
-
-    /* Apple Bento Quick Highlights Grid */
-    .bento-specs-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-
-    .spec-card {
+    /* Floating Card Core Design */
+    .floating-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      box-shadow: var(--card-inner-glow);
+      border: 1px solid var(--border-orange);
+      border-radius: 26px;
+      padding: 38px 42px;
+      margin-bottom: 32px;
+      box-shadow: var(--float-shadow), var(--inner-rim);
       backdrop-filter: blur(28px) saturate(180%);
       -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border-radius: 20px;
-      padding: 22px 20px;
-      text-align: left;
-      transition: all 0.25s ease;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
     }
 
-    .spec-card:hover {
-      border-color: var(--card-border-hover);
-      transform: translateY(-2px);
+    .floating-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-orange-hover);
+      box-shadow: var(--float-shadow-hover), var(--inner-rim);
       background: var(--card-bg-hover);
     }
 
-    .spec-icon {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
+    .floating-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange-primary), transparent);
+      opacity: 0.6;
     }
 
-    .spec-title {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 4px;
+    /* Hero Floating Section */
+    .hero-profile-card {
+      text-align: left;
+      padding: 46px 48px;
     }
 
-    .spec-value {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.015em;
-    }
-
-    .spec-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 8px;
-      font-size: 0.78rem;
-      padding: 3px 10px;
-      border-radius: 980px;
-      background: rgba(48, 209, 88, 0.15);
-      color: var(--apple-green);
-      border: 1px solid rgba(48, 209, 88, 0.3);
-      font-weight: 600;
-    }
-
-    /* Apple Bento Section Cards */
-    .bento-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      box-shadow: var(--card-inner-glow), 0 24px 48px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(32px) saturate(190%);
-      -webkit-backdrop-filter: blur(32px) saturate(190%);
-      border-radius: 28px;
-      padding: 38px 42px;
-      margin-bottom: 30px;
-      transition: border-color 0.3s ease;
-      position: relative;
-    }
-
-    .bento-card:hover {
-      border-color: var(--card-border-hover);
-    }
-
-    .section-eyebrow {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--apple-blue);
-      margin-bottom: 6px;
-    }
-
-    .section-headline {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--text-primary);
-      margin-bottom: 24px;
-    }
-
-    /* Profile Contact Row */
-    .contact-chips {
+    .hero-top-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 107, 0, 0.15);
+      padding-bottom: 24px;
     }
 
-    .chip-item {
+    .hero-title-group h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text-white);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-title-group .en-name {
+      font-size: 1.15rem;
+      color: var(--orange-amber);
+      font-weight: 500;
+      margin-left: 10px;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      color: var(--orange-primary);
+      font-weight: 600;
+      margin-top: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    /* Floating Certificate Badge */
+    .floating-cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 980px;
+      background: linear-gradient(135deg, rgba(255, 107, 0, 0.16), rgba(234, 88, 12, 0.28));
+      border: 1px solid rgba(255, 107, 0, 0.5);
+      color: var(--text-white);
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(255, 107, 0, 0.25);
+      animation: badgePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(255, 107, 0, 0.25); }
+      50% { box-shadow: 0 8px 32px rgba(255, 107, 0, 0.45); }
+    }
+
+    /* Floating Contact Pills */
+    .contact-float-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .contact-float-item {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: 980px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 0, 0.2);
       font-size: 0.92rem;
-      color: var(--text-primary);
-      transition: all 0.2s ease;
+      color: var(--text-light);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
     }
 
-    .chip-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+    .contact-float-item:hover {
+      background: rgba(255, 107, 0, 0.15);
+      border-color: var(--orange-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 107, 0, 0.2);
     }
 
-    .chip-item a {
-      color: var(--apple-blue);
+    .contact-float-item a {
+      color: var(--orange-glow);
       text-decoration: none;
+      font-weight: 600;
     }
 
-    .chip-item a:hover {
+    .contact-float-item a:hover {
       text-decoration: underline;
     }
 
-    /* Apple-styled Sacabambaspis Pro Card */
-    .mascot-apple-card {
-      background: linear-gradient(145deg, rgba(30, 30, 36, 0.85), rgba(18, 18, 20, 0.92));
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-      border-radius: 32px;
-      padding: 42px;
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .mascot-apple-card::before {
-      content: '';
-      position: absolute;
-      top: -150px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 500px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(41, 151, 255, 0.12), transparent 70%);
-      pointer-events: none;
-    }
-
-    .mascot-eyebrow {
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--apple-yellow);
-      margin-bottom: 8px;
-    }
-
-    .mascot-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-
-    .mascot-subtitle {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      max-width: 520px;
-      margin: 0 auto 28px;
-      line-height: 1.5;
-    }
-
-    /* iOS Glass Speech Bubble */
-    .apple-speech-bubble {
-      display: inline-block;
-      position: relative;
-      background: rgba(255, 255, 255, 0.94);
-      color: #1d1d1f;
-      padding: 14px 24px;
-      border-radius: 22px;
-      font-size: 1.02rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      max-width: 540px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      margin-bottom: 24px;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .apple-speech-bubble::after {
-      content: '';
-      position: absolute;
-      bottom: -9px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 9px 9px 0;
-      border-style: solid;
-      border-color: rgba(255, 255, 255, 0.94) transparent;
-      display: block;
-      width: 0;
-    }
-
-    .apple-speech-bubble:active {
-      transform: scale(0.97);
-    }
-
-    /* Fish Tank Stage */
-    .apple-fish-stage {
-      position: relative;
-      width: 340px;
-      height: 200px;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .sacabambaspis-svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 16px 25px rgba(0, 0, 0, 0.6));
-      animation: appleSwim 4s ease-in-out infinite;
-      transform-origin: center center;
-      transition: transform 0.2s ease;
-    }
-
-    .sacabambaspis-svg:hover {
-      transform: scale(1.05);
-    }
-
-    .sacabambaspis-svg:active {
-      transform: scale(0.96) rotate(-2deg);
-    }
-
-    @keyframes appleSwim {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      25% {
-        transform: translateY(-7px) rotate(-1.5deg);
-      }
-      50% {
-        transform: translateY(4px) rotate(1deg);
-      }
-      75% {
-        transform: translateY(-4px) rotate(0.5deg);
-      }
-    }
-
-    @keyframes appleTailWag {
-      0%, 100% {
-        transform: rotate(0deg);
-      }
-      50% {
-        transform: rotate(7deg);
-      }
-    }
-
-    .tail-fin {
-      animation: appleTailWag 1.3s ease-in-out infinite;
-      transform-origin: 315px 115px;
-    }
-
-    /* Water Bubbles */
-    .bubble-particle {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(41, 151, 255, 0.3) 60%, rgba(41, 151, 255, 0.05));
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      pointer-events: none;
-      animation: appleBubbleRise 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      z-index: 50;
-    }
-
-    @keyframes appleBubbleRise {
-      0% {
-        opacity: 0.9;
-        transform: translate(0, 0) scale(0.6);
-      }
-      80% {
-        opacity: 0.8;
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--tx, 0px), -120px) scale(1.3);
-      }
-    }
-
-    /* Apple iOS Segmented Controls */
-    .apple-segmented-control {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 6px;
-      border-radius: 980px;
-      backdrop-filter: blur(16px);
-      margin-top: 10px;
-    }
-
-    .apple-segment-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 18px;
-      border-radius: 980px;
-      background: transparent;
-      color: var(--text-primary);
-      border: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
-    }
-
-    .apple-segment-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      transform: scale(1.02);
-    }
-
-    .apple-segment-btn:active {
-      transform: scale(0.97);
-    }
-
-    .apple-segment-btn.active-state {
-      background: rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .mascot-counter {
-      margin-top: 16px;
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-    }
-
-    .mascot-counter strong {
-      color: var(--apple-blue);
-      font-weight: 600;
-    }
-
-    /* Experience Bento Cards */
-    .experience-grid {
+    /* Floating Highlight Stats Grid */
+    .floating-stats-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
-    .exp-apple-card {
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 22px;
-      padding: 28px 30px;
-      transition: all 0.25s ease;
+    .stat-float-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-orange);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: var(--float-shadow), var(--inner-rim);
+      backdrop-filter: blur(24px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
-    .exp-apple-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.16);
-      transform: translateY(-2px);
+    .stat-float-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--orange-primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 107, 0, 0.25);
     }
 
-    .exp-top-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 10px;
+    .stat-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
     }
 
-    .exp-title-group {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--orange-amber);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .exp-company-name {
-      font-size: 1.25rem;
+    .stat-value {
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--text-white);
+      margin-top: 4px;
+    }
+
+    /* Section Titles */
+    .section-float-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
       letter-spacing: -0.015em;
     }
 
-    .exp-role-tag {
+    .title-orange-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--orange-primary);
+      box-shadow: 0 0 14px var(--orange-primary);
+      display: inline-block;
+    }
+
+    .summary-text {
+      font-size: 1.04rem;
+      color: #d1d5db;
+      line-height: 1.85;
+      text-align: justify;
+    }
+
+    /* Floating Timeline Experience */
+    .experience-floating-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .exp-floating-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 0, 0.15);
+      border-radius: 20px;
+      padding: 26px 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .exp-floating-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 107, 0, 0.45);
+      background: rgba(255, 107, 0, 0.04);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 107, 0, 0.15);
+    }
+
+    .exp-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .exp-company-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+
+    .exp-role-badge {
       font-size: 0.95rem;
-      color: var(--apple-blue);
-      font-weight: 500;
+      color: var(--orange-primary);
+      font-weight: 600;
+      margin-left: 8px;
     }
 
     .exp-date-pill {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       padding: 4px 12px;
       border-radius: 980px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text-secondary);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 107, 0, 0.12);
+      color: var(--orange-amber);
+      border: 1px solid rgba(255, 107, 0, 0.25);
+      font-weight: 600;
     }
 
-    .exp-bullets {
+    .exp-duties-list {
       list-style: none;
-      margin-top: 14px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      margin-top: 14px;
     }
 
-    .exp-bullets li {
+    .exp-duties-list li {
       position: relative;
-      padding-left: 24px;
+      padding-left: 22px;
+      color: #e5e7eb;
       font-size: 0.98rem;
-      color: #d1d1d6;
-      line-height: 1.65;
     }
 
-    .exp-bullets li::before {
-      content: '';
+    .exp-duties-list li::before {
+      content: '⚡';
       position: absolute;
-      left: 4px;
-      top: 10px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--apple-blue);
+      left: 0;
+      top: 0;
+      font-size: 0.85rem;
+      color: var(--orange-primary);
     }
 
-    .exp-bullets li strong {
-      color: #ffffff;
-      font-weight: 600;
+    .exp-duties-list li strong {
+      color: var(--text-white);
+      font-weight: 700;
     }
 
-    /* Skills Apple Bento Grid */
-    .skills-bento-grid {
+    /* Floating Skills Matrix */
+    .skills-floating-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
+      gap: 20px;
     }
 
-    .skill-bento-box {
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .skill-floating-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 0, 0.16);
       border-radius: 20px;
-      padding: 24px 22px;
-      transition: all 0.25s ease;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .skill-bento-box:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.18);
-      transform: translateY(-2px);
+    .skill-floating-box:hover {
+      transform: translateY(-5px);
+      border-color: var(--orange-primary);
+      background: rgba(255, 107, 0, 0.05);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 107, 0, 0.2);
     }
 
-    .skill-bento-header {
+    .skill-box-heading {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text-primary);
+      gap: 8px;
     }
 
-    .skill-tags-group {
+    .skill-chips-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
 
-    .apple-pill-tag {
-      font-size: 0.85rem;
+    .floating-skill-pill {
+      font-size: 0.86rem;
       padding: 6px 14px;
       border-radius: 980px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text-primary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      font-weight: 400;
+      background: rgba(255, 107, 0, 0.1);
+      color: var(--orange-light);
+      border: 1px solid rgba(255, 107, 0, 0.22);
+      font-weight: 500;
       transition: all 0.2s ease;
     }
 
-    .apple-pill-tag:hover {
-      background: rgba(41, 151, 255, 0.18);
+    .floating-skill-pill:hover {
+      background: var(--orange-primary);
       color: #ffffff;
-      border-color: var(--apple-blue);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.4);
     }
 
-    /* Education Item */
-    .edu-content-row {
+    /* Floating Education Box */
+    .edu-floating-box {
+      padding: 10px 0;
+    }
+
+    .edu-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 8px;
+      gap: 8px;
     }
 
-    .edu-school-title {
+    .edu-school-name {
       font-size: 1.25rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-weight: 800;
+      color: var(--text-white);
     }
 
-    .edu-major-title {
-      color: var(--apple-blue);
-      font-weight: 500;
+    .edu-major-name {
+      color: var(--orange-primary);
+      font-weight: 600;
       margin-left: 8px;
       font-size: 1.05rem;
     }
 
-    /* Persistent Apple Floating Widget */
-    .apple-floating-widget {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-    }
-
-    .floating-tooltip {
-      background: rgba(28, 28, 30, 0.94);
-      color: var(--text-primary);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 7px 14px;
-      border-radius: 980px;
-      font-size: 0.82rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(20px);
-      transition: all 0.2s ease;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .floating-fish-trigger {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: rgba(30, 30, 32, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
-    }
-
-    .floating-fish-trigger:hover {
-      transform: scale(1.12);
-      border-color: var(--apple-blue);
-    }
-
-    .floating-fish-trigger:active {
-      transform: scale(0.92);
-    }
-
-    /* Apple Directory Footer */
-    .apple-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 36px 0 24px;
-      margin-top: 40px;
-      color: var(--text-secondary);
-      font-size: 0.82rem;
+    .edu-details {
+      margin-top: 12px;
+      color: #d1d5db;
+      font-size: 0.98rem;
       line-height: 1.7;
     }
 
-    .footer-content {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .footer-left {
+    /* Floating Quick Dock (Bottom-Right) */
+    .floating-action-dock {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 999;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 10px;
     }
 
-    .footer-badge {
-      display: inline-flex;
+    .floating-dock-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(22, 22, 27, 0.9);
+      border: 1px solid var(--border-orange);
+      color: var(--orange-primary);
+      display: flex;
       align-items: center;
-      gap: 6px;
-      color: var(--text-tertiary);
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 107, 0, 0.2);
+      backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
 
-    /* Mobile Adaptations */
-    @media (max-width: 768px) {
-      .apple-nav {
-        padding: 6px 0;
-      }
-      .nav-content {
-        flex-direction: column;
-        align-items: stretch;
+    .floating-dock-btn:hover {
+      background: var(--orange-primary);
+      color: #ffffff;
+      transform: translateY(-4px) scale(1.1);
+      box-shadow: 0 16px 35px rgba(255, 107, 0, 0.5);
+    }
+
+    /* Floating Footer */
+    .floating-footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      border-top: 1px solid rgba(255, 107, 0, 0.15);
+      margin-top: 40px;
+    }
+
+    .footer-orange-link {
+      color: var(--orange-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-orange-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 820px) {
+      .floating-nav-island {
         height: auto;
-        padding: 6px 16px;
-        gap: 8px;
+        padding: 10px 16px;
+        flex-direction: column;
+        gap: 10px;
+        border-radius: 20px;
       }
-      .nav-top-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .nav-links {
+      .nav-menu {
         overflow-x: auto;
         white-space: nowrap;
+        width: 100%;
+        justify-content: flex-start;
         padding-bottom: 4px;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
       }
-      .nav-links::-webkit-scrollbar {
+      .nav-menu::-webkit-scrollbar {
         display: none;
       }
-      .btn-apple-action {
+      .nav-cta-btn {
         display: none;
       }
       .container {
-        padding: 24px 16px 60px;
+        padding: 20px 14px 60px;
       }
-      .bento-card, .mascot-apple-card {
-        padding: 26px 20px;
-        border-radius: 22px;
-      }
-      .hero-title {
-        font-size: 2.4rem;
-      }
-      .apple-fish-stage {
-        width: 290px;
-        height: 170px;
-      }
-      .apple-segmented-control {
+      .floating-card {
+        padding: 28px 20px;
         border-radius: 20px;
       }
-      .apple-segment-btn {
-        padding: 7px 12px;
-        font-size: 0.82rem;
+      .hero-title-group h1 {
+        font-size: 2.1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Progress Bar -->
+  <!-- Reading Progress Lightbar -->
   <div id="scroll-progress"></div>
 
-  <!-- Ambient Light -->
-  <div class="ambient-glow ambient-1"></div>
-  <div class="ambient-glow ambient-2"></div>
-  <div class="ambient-glow ambient-3"></div>
+  <!-- Ambient Floating Orbs -->
+  <div class="ambient-drift orb-1"></div>
+  <div class="ambient-drift orb-2"></div>
+  <div class="ambient-drift orb-3"></div>
 
-  <!-- Apple Sticky Navigation Bar -->
-  <header class="apple-nav">
-    <div class="nav-content">
-      <div class="nav-top-row">
-        <a href="#hero" class="nav-brand">
-          <div class="nav-fish-icon" id="navFishTrigger" title="點擊互動薩卡班甲魚">
-            <!-- Sleek Minimalist Sacabambaspis Vector -->
-            <svg viewBox="0 0 100 65" width="22" height="15">
-              <ellipse cx="50" cy="35" rx="42" ry="24" fill="#d8c7a0" stroke="#332717" stroke-width="2"/>
-              <ellipse cx="48" cy="38" rx="32" ry="16" fill="#f4efe2"/>
-              <circle cx="34" cy="27" r="4.8" fill="#ffffff" stroke="#222" stroke-width="1.5"/>
-              <circle class="nav-pupil" cx="34" cy="27" r="2.2" fill="#111"/>
-              <circle cx="58" cy="27" r="4.8" fill="#ffffff" stroke="#222" stroke-width="1.5"/>
-              <circle class="nav-pupil" cx="58" cy="27" r="2.2" fill="#111"/>
-              <polygon points="46,36 50,42 42,42" fill="#7a2121"/>
-              <polygon points="86,35 97,25 93,35 97,45" fill="#c7b587" stroke="#332717" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span>陳弘明</span>
-        </a>
-      </div>
+  <!-- Floating Island Navigation Bar -->
+  <div class="floating-nav-wrapper">
+    <nav class="floating-nav-island">
+      <a href="#hero" class="nav-brand">
+        <div class="brand-glow-icon">⚡</div>
+        <span>陳弘明</span>
+      </a>
 
-      <ul class="nav-links">
-        <li><a href="#hero" class="nav-link active" data-target="hero">首頁</a></li>
-        <li><a href="#mascot" class="nav-link special-mascot" data-target="mascot">🐟 薩卡班甲魚 Pro</a></li>
-        <li><a href="#summary" class="nav-link" data-target="summary">簡介</a></li>
-        <li><a href="#experience" class="nav-link" data-target="experience">經歷</a></li>
-        <li><a href="#skills" class="nav-link" data-target="skills">技能</a></li>
-        <li><a href="#education" class="nav-link" data-target="education">學歷</a></li>
+      <ul class="nav-menu">
+        <li><a href="#hero" class="nav-pill active" data-target="hero">首頁</a></li>
+        <li><a href="#summary" class="nav-pill" data-target="summary">個人簡介</a></li>
+        <li><a href="#experience" class="nav-pill" data-target="experience">工作經歷</a></li>
+        <li><a href="#skills" class="nav-pill" data-target="skills">專業技能</a></li>
+        <li><a href="#education" class="nav-pill" data-target="education">學歷背景</a></li>
       </ul>
 
-      <a href="tel:0903333611" class="btn-apple-action">
-        <span>聯絡諮詢</span>
+      <a href="tel:0903333611" class="nav-cta-btn">
+        <span>📞 一鍵撥號</span>
       </a>
-    </div>
-  </header>
+    </nav>
+  </div>
 
-  <!-- Main Container -->
+  <!-- Main Content Container -->
   <main class="container">
-    
-    <!-- Hero Section (Apple Keynote Style) -->
-    <section class="hero-section" id="hero">
-      <div class="hero-eyebrow">
-        <span>Engineering & Precision Craft</span>
-      </div>
-      <h1 class="hero-title">陳弘明。</h1>
-      <p class="hero-subtitle">現場工程施作 ｜ 精密製造技術 ｜ 水電專業底蘊</p>
-      <p class="hero-desc">
-        秉持嚴謹的 SOP 標準作業規範與極高抗壓特質。具備高空作業車操作合格證照，融合精密零組件組裝實務與工程現場歷練，追求每一次施作的安全與卓越。
-      </p>
 
-      <div class="hero-actions">
-        <a href="tel:0903333611" class="btn-apple-primary">
-          <span>📞 即刻致電聯絡</span>
-        </a>
-        <a href="#mascot" class="btn-apple-secondary">
-          <span>🐟 探索薩卡班甲魚 Pro</span>
-        </a>
-      </div>
-
-      <!-- Bento Specs Row -->
-      <div class="bento-specs-row">
-        <div class="spec-card">
-          <div class="spec-icon">🛡️</div>
-          <div class="spec-title">專業認證</div>
-          <div class="spec-value">高空作業車合格證照</div>
-          <div class="spec-badge">已完成專業培訓認證</div>
+    <!-- Hero Floating Profile Card -->
+    <section class="floating-card hero-profile-card" id="hero">
+      <div class="hero-top-row">
+        <div class="hero-title-group">
+          <h1>陳弘明 <span class="en-name">Chen, Hong-Ming</span></h1>
+          <div class="hero-tagline">現場工程施作 ｜ 精密製造技術 ｜ 水電技術養成</div>
         </div>
 
-        <div class="spec-card">
-          <div class="spec-icon">🏗️</div>
-          <div class="spec-title">現場工程歷練</div>
-          <div class="spec-value">榮信企業社</div>
-          <div class="spec-badge">現場高空工程人員</div>
-        </div>
-
-        <div class="spec-card">
-          <div class="spec-icon">⚙️</div>
-          <div class="spec-title">精密製造經驗</div>
-          <div class="spec-value">上銀科技</div>
-          <div class="spec-badge">SOP 落實與組裝品檢</div>
-        </div>
-
-        <div class="spec-card">
-          <div class="spec-icon">🎓</div>
-          <div class="spec-title">科班專業養成</div>
-          <div class="spec-value">治平高中 水電技術科</div>
-          <div class="spec-badge">配管配線紮實功底</div>
+        <div class="floating-cert-badge">
+          <span>🛡️</span> 具備高空作業車操作合格證照
         </div>
       </div>
 
-      <!-- Contact Chips Bar -->
-      <div class="contact-chips" style="justify-content: center;">
-        <div class="chip-item">
+      <!-- Contact Floating Bar -->
+      <div class="contact-float-bar">
+        <div class="contact-float-item">
           <span>📞 電話：</span>
           <a href="tel:0903333611">0903333611</a>
         </div>
-        <div class="chip-item">
+        <div class="contact-float-item">
           <span>✉️ 電子郵件：</span>
           <a href="mailto:a0903333611@icloud.com">a0903333611@icloud.com</a>
         </div>
-        <div class="chip-item">
+        <div class="contact-float-item">
           <span>📍 居住地區：</span>
           <span>桃園市桃園區</span>
         </div>
       </div>
     </section>
 
-    <!-- Sacabambaspis Pro Interactive Mascot Section (Apple Showcase Card) -->
-    <section class="mascot-apple-card" id="mascot">
-      <div class="mascot-eyebrow">Interactive Mascot & Safety Guardian</div>
-      <h2 class="mascot-title">薩卡班甲魚 Pro。</h2>
-      <p class="mascot-subtitle">來自奧陶紀的極簡古生物美學。呆萌雙眼即時追蹤游標，全方位守護現場工安規範。</p>
-
-      <!-- iOS Style Interactive Speech Bubble -->
-      <div class="apple-speech-bubble" id="speechBubble" title="點擊聽聽甲魚的工安名言！">
-        （◉▼◉）咕嚕咕嚕！我是薩卡班甲魚，弘明具備高空作業車合格證照，工安防護第一名！
+    <!-- Floating Highlight Stats Grid -->
+    <div class="floating-stats-grid">
+      <div class="stat-float-card">
+        <div class="stat-icon">🦺</div>
+        <div class="stat-label">工安認證</div>
+        <div class="stat-value">高空作業車合格證照</div>
       </div>
 
-      <!-- Interactive Stage -->
-      <div class="apple-fish-stage" id="fishTank" title="點擊拍拍我，或是用滑鼠游標逗逗我的眼睛！">
-        <svg class="sacabambaspis-svg" id="sacabambaspisSvg" viewBox="0 0 400 230">
-          <defs>
-            <radialGradient id="appleFishGrad" cx="35%" cy="38%" r="65%">
-              <stop offset="0%" stop-color="#faf5ec"/>
-              <stop offset="45%" stop-color="#dccbb0"/>
-              <stop offset="100%" stop-color="#b59f75"/>
-            </radialGradient>
-            <linearGradient id="shieldLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#997d4b"/>
-              <stop offset="100%" stop-color="#604b28"/>
-            </linearGradient>
-            <linearGradient id="appleHelmetGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ffea79"/>
-              <stop offset="60%" stop-color="#f59e0b"/>
-              <stop offset="100%" stop-color="#d97706"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Animated Tail Fin -->
-          <g class="tail-fin">
-            <path d="M 315 115 C 340 85, 375 60, 395 72 C 378 100, 375 115, 395 158 C 370 145, 335 130, 315 115 Z" 
-                  fill="#c8b584" stroke="#3d3018" stroke-width="2.5" stroke-linejoin="round"/>
-            <path d="M 330 115 L 385 85 M 335 118 L 385 115 M 330 120 L 385 145" 
-                  stroke="rgba(61, 48, 24, 0.35)" stroke-width="1.8" stroke-linecap="round"/>
-          </g>
-
-          <!-- Torpedo Fish Body -->
-          <path d="M 80 115 C 80 65, 170 50, 270 75 C 320 88, 335 110, 335 115 C 335 120, 320 142, 270 155 C 170 180, 80 165, 80 115 Z" 
-                fill="url(#appleFishGrad)" stroke="#3d3018" stroke-width="3" stroke-linejoin="round"/>
-
-          <!-- Dorsal Ridges -->
-          <path d="M 105 72 C 160 62, 230 68, 290 85" fill="none" stroke="url(#shieldLineGrad)" stroke-width="2" stroke-dasharray="5,4"/>
-          <path d="M 115 158 C 170 165, 230 160, 285 145" fill="none" stroke="rgba(96, 75, 40, 0.45)" stroke-width="2" stroke-dasharray="5,4"/>
-          <path d="M 125 115 Q 185 112 240 120" fill="none" stroke="rgba(61, 48, 24, 0.3)" stroke-width="1.8"/>
-
-          <!-- Front Facial Shield -->
-          <path d="M 55 115 C 55 72, 85 70, 105 75 C 115 90, 115 140, 105 155 C 85 160, 55 158, 55 115 Z" 
-                fill="#ecdfcb" stroke="#3d3018" stroke-width="2.5"/>
-
-          <!-- Left Eye with Dynamic Tracking Pupil -->
-          <g>
-            <ellipse cx="78" cy="95" rx="14" ry="14" fill="#ffffff" stroke="#1d1d1f" stroke-width="2.5"/>
-            <circle id="pupilLeft" cx="77" cy="95" r="5.8" fill="#111111"/>
-            <circle cx="75" cy="92" r="2.2" fill="#ffffff"/>
-          </g>
-
-          <!-- Right Eye with Dynamic Tracking Pupil -->
-          <g>
-            <ellipse cx="78" cy="135" rx="14" ry="14" fill="#ffffff" stroke="#1d1d1f" stroke-width="2.5"/>
-            <circle id="pupilRight" cx="77" cy="135" r="5.8" fill="#111111"/>
-            <circle cx="75" cy="132" r="2.2" fill="#ffffff"/>
-          </g>
-
-          <!-- Iconic Open Triangular Derp Mouth -->
-          <g id="fishMouthGroup">
-            <polygon id="fishMouth" points="62,110 52,115 62,120" fill="#7c1d1d" stroke="#2a1212" stroke-width="1.8" stroke-linejoin="round"/>
-            <ellipse cx="58" cy="115" rx="2" ry="2" fill="#f87171"/>
-          </g>
-
-          <!-- Engineering Safety Hard Hat Pro -->
-          <g id="safetyHelmet" style="transition: opacity 0.3s ease, transform 0.3s ease;">
-            <path d="M 60 76 C 60 48, 100 45, 116 70 Z" fill="url(#appleHelmetGrad)" stroke="#78350f" stroke-width="2.2"/>
-            <path d="M 52 76 Q 88 72 122 72" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round"/>
-            <path d="M 50 78 Q 88 74 124 74" stroke="#78350f" stroke-width="1.8" fill="none"/>
-            <rect x="83" y="53" width="10" height="10" rx="2" fill="#ffffff"/>
-            <path d="M 88 55 L 88 61 M 85 58 L 91 58" stroke="#16a34a" stroke-width="2.2" stroke-linecap="square"/>
-          </g>
-        </svg>
+      <div class="stat-float-card">
+        <div class="stat-icon">🏗️</div>
+        <div class="stat-label">工程實務</div>
+        <div class="stat-value">榮信企業社 現場施作</div>
       </div>
 
-      <!-- Apple iOS Segmented Control Buttons -->
-      <div class="apple-segmented-control">
-        <button class="apple-segment-btn" id="btnPetFish" type="button">
-          <span>👋 撫摸互動</span>
-        </button>
-        <button class="apple-segment-btn" id="btnToggleHelmet" type="button">
-          <span>⛑️ 工安帽 Pro (<span id="helmetStatusText">開啟</span>)</span>
-        </button>
-        <button class="apple-segment-btn" id="btnBubbleBurst" type="button">
-          <span>🫧 釋放水波氣泡</span>
-        </button>
-        <button class="apple-segment-btn" id="btnFeedWeed" type="button">
-          <span>🌿 補給水草</span>
-        </button>
+      <div class="stat-float-card">
+        <div class="stat-icon">⚙️</div>
+        <div class="stat-label">精密製造</div>
+        <div class="stat-value">上銀科技 SOP組裝品檢</div>
       </div>
 
-      <div class="mascot-counter">
-        <span>累計已完成 </span><strong id="petCount">0</strong><span> 次工安巡檢互動</span>
+      <div class="stat-float-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-label">科班養成</div>
+        <div class="stat-value">治平高中 水電技術科</div>
       </div>
-    </section>
+    </div>
 
     <!-- Summary (個人簡介) -->
-    <section class="bento-card" id="summary">
-      <div class="section-eyebrow">Executive Summary</div>
-      <h2 class="section-headline">個人簡介</h2>
-      <p style="font-size: 1.05rem; color: #d1d1d6; line-height: 1.85; text-align: justify; letter-spacing: -0.01em;">
+    <section class="floating-card" id="summary">
+      <h2 class="section-float-title">
+        <span class="title-orange-dot"></span>
+        個人簡介
+      </h2>
+      <p class="summary-text">
         具備治平高中水電技術科專業養成背景，並取得高空作業車操作人員合格證照。擁有知名精密機械領導企業（上銀科技）生產作業經驗與榮信企業社現場工程實務累積。個人特質抗壓性極強，具備高度適應力與體能耐受度，能穩定勝任高強度與高空現場施作作業。嚴格遵守現場職業安全衛生防護規範（SOP），工作踏實負責，能密切配合團隊與工班派工調度。
       </p>
     </section>
 
     <!-- Work Experience (工作經歷) -->
-    <section class="bento-card" id="experience">
-      <div class="section-eyebrow">Professional History</div>
-      <h2 class="section-headline">工作經歷</h2>
+    <section class="floating-card" id="experience">
+      <h2 class="section-float-title">
+        <span class="title-orange-dot"></span>
+        工作經歷
+      </h2>
 
-      <div class="experience-grid">
-        <!-- Exp 1: 榮信企業社 -->
-        <div class="exp-apple-card">
-          <div class="exp-top-row">
-            <div class="exp-title-group">
-              <span class="exp-company-name">榮信企業社</span>
-              <span class="exp-role-tag">現場工程人員</span>
+      <div class="experience-floating-list">
+        <!-- Job 1: 榮信企業社 -->
+        <div class="exp-floating-item">
+          <div class="exp-header-row">
+            <div>
+              <span class="exp-company-title">榮信企業社</span>
+              <span class="exp-role-badge">現場工程人員</span>
             </div>
             <span class="exp-date-pill">2023 年 – 2026 年（桃園市）</span>
           </div>
-          <ul class="exp-bullets">
+          <ul class="exp-duties-list">
             <li><strong>現場工程施作</strong>：負責現場各項工項施作與設備安裝，依工程規劃進度穩定執行。</li>
             <li><strong>高空機具安全操作</strong>：操作高空作業車執行高處作業，落實安全裝備防護與現場安全準則，在職期間維持良好安全紀錄。</li>
             <li><strong>團隊協作配合</strong>：配合主管工務指揮與團隊派工調度，具備強烈責任感與高抗壓性，及時排除現場施作問題。</li>
           </ul>
         </div>
 
-        <!-- Exp 2: 上銀科技 -->
-        <div class="exp-apple-card">
-          <div class="exp-top-row">
-            <div class="exp-title-group">
-              <span class="exp-company-name">上銀科技股份有限公司</span>
-              <span class="exp-role-tag">技術員 / 生產作業人員</span>
+        <!-- Job 2: 上銀科技 -->
+        <div class="exp-floating-item">
+          <div class="exp-header-row">
+            <div>
+              <span class="exp-company-title">上銀科技股份有限公司</span>
+              <span class="exp-role-badge">技術員 / 生產作業人員</span>
             </div>
             <span class="exp-date-pill">2021 年 – 2024 年（台灣）</span>
           </div>
-          <ul class="exp-bullets">
+          <ul class="exp-duties-list">
             <li><strong>標準作業程序落實</strong>：嚴格遵守標準作業程序（SOP），負責精密機械零組件生產、組裝、檢查或加工等現場作業。</li>
             <li><strong>品質標準把關</strong>：專注執行工件外觀與規格檢驗，維持穩定作業良率與產線流暢度。</li>
             <li><strong>產能配合與自主維護</strong>：具備高度耐力與抗壓性，配合團隊輪班與產能調度需求，並落實機台每日自主清潔點檢。</li>
@@ -1258,336 +858,158 @@
     </section>
 
     <!-- Skills & Highlights (專業技能與特質) -->
-    <section class="bento-card" id="skills">
-      <div class="section-eyebrow">Expertise & Qualities</div>
-      <h2 class="section-headline">專業技能與個人特質</h2>
+    <section class="floating-card" id="skills">
+      <h2 class="section-float-title">
+        <span class="title-orange-dot"></span>
+        專業技能與個人特質
+      </h2>
 
-      <div class="skills-bento-grid">
-        <div class="skill-bento-box">
-          <div class="skill-bento-header">
+      <div class="skills-floating-grid">
+        <div class="skill-floating-box">
+          <div class="skill-box-heading">
             <span>🎖️</span> 證照與工安規範
           </div>
-          <div class="skill-tags-group">
-            <span class="apple-pill-tag">高空作業車合格操作證</span>
-            <span class="apple-pill-tag">現場防墜安全規範</span>
-            <span class="apple-pill-tag">職業安全衛生自律</span>
+          <div class="skill-chips-wrap">
+            <span class="floating-skill-pill">高空作業車合格操作證</span>
+            <span class="floating-skill-pill">現場防墜安全規範</span>
+            <span class="floating-skill-pill">職業安全衛生自律</span>
           </div>
         </div>
 
-        <div class="skill-bento-box">
-          <div class="skill-bento-header">
+        <div class="skill-floating-box">
+          <div class="skill-box-heading">
             <span>⚡</span> 水電技術與工程
           </div>
-          <div class="skill-tags-group">
-            <span class="apple-pill-tag">水電配管配線基礎</span>
-            <span class="apple-pill-tag">手動／電動工具操作</span>
-            <span class="apple-pill-tag">設備日常自主點檢</span>
-            <span class="apple-pill-tag">工程現場施作能力</span>
+          <div class="skill-chips-wrap">
+            <span class="floating-skill-pill">水電配管配線基礎</span>
+            <span class="floating-skill-pill">手動／電動工具操作</span>
+            <span class="floating-skill-pill">設備日常自主點檢</span>
+            <span class="floating-skill-pill">工程現場施作能力</span>
           </div>
         </div>
 
-        <div class="skill-bento-box">
-          <div class="skill-bento-header">
+        <div class="skill-floating-box">
+          <div class="skill-box-heading">
             <span>🏭</span> 生產製造與品管
           </div>
-          <div class="skill-tags-group">
-            <span class="apple-pill-tag">SOP標準作業程序落實</span>
-            <span class="apple-pill-tag">精密零組件組裝作業</span>
-            <span class="apple-pill-tag">產線品檢初驗程序</span>
-            <span class="apple-pill-tag">機台環境清潔保養</span>
+          <div class="skill-chips-wrap">
+            <span class="floating-skill-pill">SOP標準作業程序落實</span>
+            <span class="floating-skill-pill">精密零組件組裝作業</span>
+            <span class="floating-skill-pill">產線品檢初驗程序</span>
+            <span class="floating-skill-pill">機台環境清潔保養</span>
           </div>
         </div>
 
-        <div class="skill-bento-box">
-          <div class="skill-bento-header">
+        <div class="skill-floating-box">
+          <div class="skill-box-heading">
             <span>💪</span> 個人特質與語言
           </div>
-          <div class="skill-tags-group">
-            <span class="apple-pill-tag">高抗壓抗耐受度</span>
-            <span class="apple-pill-tag">體能充足適應力佳</span>
-            <span class="apple-pill-tag">團隊派工高度配合</span>
-            <span class="apple-pill-tag">中文（母語）</span>
-            <span class="apple-pill-tag">基礎英文</span>
+          <div class="skill-chips-wrap">
+            <span class="floating-skill-pill">高抗壓耐受度</span>
+            <span class="floating-skill-pill">體能充足適應力佳</span>
+            <span class="floating-skill-pill">團隊派工高度配合</span>
+            <span class="floating-skill-pill">中文（母語）</span>
+            <span class="floating-skill-pill">基礎英文</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Education (學歷背景) -->
-    <section class="bento-card" id="education">
-      <div class="section-eyebrow">Academic Background</div>
-      <h2 class="section-headline">學歷背景</h2>
-      <div class="edu-content-row">
-        <div>
-          <span class="edu-school-title">治平高級中學</span>
-          <span class="edu-major-title">水電技術科</span>
+    <section class="floating-card" id="education">
+      <h2 class="section-float-title">
+        <span class="title-orange-dot"></span>
+        學歷背景
+      </h2>
+      <div class="edu-floating-box">
+        <div class="edu-row">
+          <div>
+            <span class="edu-school-name">治平高級中學</span>
+            <span class="edu-major-name">水電技術科</span>
+          </div>
+          <span class="exp-date-pill">2014 年 – 2017 年</span>
         </div>
-        <span class="exp-date-pill">2014 年 – 2017 年</span>
+        <p class="edu-details">
+          完成水電工程實務專業養成，涵蓋室內配線、給排水配管、用電安全與工具操作等實務課程，奠定工程與實作技術根基。
+        </p>
       </div>
-      <p style="margin-top: 10px; color: #a1a1a6; font-size: 0.96rem; line-height: 1.65;">
-        完成水電工程實務專業養成，涵蓋室內配線、給排水配管、用電安全與工具操作等實務課程，奠定工程與實作技術根基。
-      </p>
     </section>
 
-    <!-- Apple Directory Footer -->
-    <footer class="apple-footer">
-      <div class="footer-content">
-        <div class="footer-left">
-          <p>© 2026 陳弘明 (Chen, Hong-Ming) · 個人履歷網頁 · Apple 風格設計</p>
-          <p class="footer-badge">
-            <span>📍 台灣 · 桃園市桃園區</span>
-            <span>·</span>
-            <span>資料內容均嚴格依據真實經歷陳述</span>
-          </p>
-        </div>
-        <div>
-          <a href="#hero" style="color: var(--apple-blue); text-decoration: none; font-weight: 500;">回到頂端 ↑</a>
-        </div>
-      </div>
+    <!-- Floating Footer -->
+    <footer class="floating-footer">
+      <p>© 2026 陳弘明 (Chen, Hong-Ming) · 專業個人履歷 · 黑橘全浮動設計</p>
+      <p style="margin-top: 6px; color: #6b7280;">資料內容均嚴格依據真實經歷陳述 · 致力於高標準工安與卓越施作</p>
     </footer>
 
   </main>
 
-  <!-- Apple Persistent Floating Companion Widget -->
-  <aside class="apple-floating-widget">
-    <div class="floating-tooltip" id="companionBubble">
-      （◉▼◉）點我游動！
-    </div>
-    <div class="floating-fish-trigger" id="floatingFishBtn" title="點擊薩卡班甲魚互動">
-      <svg viewBox="0 0 100 70" width="42" height="30" style="overflow: visible;">
-        <ellipse cx="48" cy="35" rx="38" ry="22" fill="#d7c79e" stroke="#332717" stroke-width="2"/>
-        <ellipse cx="45" cy="38" rx="28" ry="14" fill="#f4eee1"/>
-        <circle cx="30" cy="27" r="5" fill="#ffffff" stroke="#222" stroke-width="1.5"/>
-        <circle id="floatingPupil1" cx="30" cy="27" r="2.2" fill="#111"/>
-        <circle cx="54" cy="27" r="5" fill="#ffffff" stroke="#222" stroke-width="1.5"/>
-        <circle id="floatingPupil2" cx="54" cy="27" r="2.2" fill="#111"/>
-        <polygon points="41,36 45,43 37,43" fill="#781d1d" stroke="#222" stroke-width="1"/>
-        <polygon points="80,35 94,22 89,35 94,48" fill="#c4b07e" stroke="#332717" stroke-width="1.5"/>
-      </svg>
-    </div>
+  <!-- Floating Quick Action Dock (Bottom-Right) -->
+  <aside class="floating-action-dock">
+    <a href="tel:0903333611" class="floating-dock-btn" title="立即電話聯絡">
+      📞
+    </a>
+    <a href="mailto:a0903333611@icloud.com" class="floating-dock-btn" title="發送電子郵件">
+      ✉️
+    </a>
+    <a href="#hero" class="floating-dock-btn" title="回到頁面頂部">
+      ⬆️
+    </a>
   </aside>
 
   <!-- Interactive JavaScript Engine -->
   <script>
-    // 1. Reading Progress & Active Nav Scrollspy
+    // 1. Reading Progress Bar & Floating Nav Active State
     const progressBar = document.getElementById('scroll-progress');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section, header.hero-section');
+    const navPills = document.querySelectorAll('.nav-pill');
+    const sections = document.querySelectorAll('section.floating-card');
 
     window.addEventListener('scroll', () => {
+      // Progress calculation
       const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
       if (progressBar) progressBar.style.width = scrolled + '%';
 
-      let currentId = '';
-      const offsetTop = window.scrollY + 160;
+      // Active Section Scrollspy
+      let currentSectionId = '';
+      const offsetTop = window.scrollY + 180;
 
       sections.forEach(sec => {
         const top = sec.offsetTop;
         const h = sec.offsetHeight;
         if (offsetTop >= top && offsetTop < top + h) {
-          currentId = sec.getAttribute('id');
+          currentSectionId = sec.getAttribute('id');
         }
       });
 
-      if (currentId) {
-        navLinks.forEach(link => {
-          if (link.getAttribute('data-target') === currentId) {
-            link.classList.add('active');
+      if (currentSectionId) {
+        navPills.forEach(pill => {
+          if (pill.getAttribute('data-target') === currentSectionId) {
+            pill.classList.add('active');
           } else {
-            link.classList.remove('active');
+            pill.classList.remove('active');
           }
         });
       }
     });
 
-    // 2. Sacabambaspis Mascot Interaction System
-    const quotes = [
-      "（◉▼◉）咕嚕咕嚕！我是薩卡班甲魚 Pro，弘明具備高空作業合格證照，工安防護第一名！",
-      "⚡ 治平高中水電技術科紮實背景，配線配管實力堅強！",
-      "🏭 上銀科技精密組裝經驗，嚴格落實 SOP 與品質檢驗！",
-      "🦺 榮信企業社現場工程經驗，高空作業防護零失誤！",
-      "💪 抗壓性極強、體能耐操、團隊派工調度神隊友！",
-      "🐟 雖然我沒有下巴，但我知道弘明是非常可靠的夥伴！",
-      "🫧 咕嚕嚕嚕...你又戳了我一下，今天工作也要平安順利！",
-      "⛑️ 工安帽戴好，高空作業有合格證照最心安！",
-      "🌿 感謝餵食！水草好吃，弘明技術好讚！"
-    ];
-
-    let petCount = 0;
-    let helmetOn = true;
-    const speechBubble = document.getElementById('speechBubble');
-    const fishTank = document.getElementById('fishTank');
-    const sacabambaspisSvg = document.getElementById('sacabambaspisSvg');
-    const petCountEl = document.getElementById('petCount');
-    const safetyHelmet = document.getElementById('safetyHelmet');
-    const helmetStatusText = document.getElementById('helmetStatusText');
-    const pupilLeft = document.getElementById('pupilLeft');
-    const pupilRight = document.getElementById('pupilRight');
-    const floatingPupil1 = document.getElementById('floatingPupil1');
-    const floatingPupil2 = document.getElementById('floatingPupil2');
-    const fishMouth = document.getElementById('fishMouth');
-
-    function petSacabambaspis(customMsg = null) {
-      petCount++;
-      if (petCountEl) petCountEl.textContent = petCount;
-
-      const msg = customMsg || quotes[Math.floor(Math.random() * quotes.length)];
-      if (speechBubble) {
-        speechBubble.textContent = msg;
-        speechBubble.style.transform = 'scale(1.04)';
-        setTimeout(() => speechBubble.style.transform = 'scale(1)', 200);
-      }
-
-      if (sacabambaspisSvg) {
-        sacabambaspisSvg.style.transform = 'scale(1.1) rotate(' + (Math.random() * 6 - 3) + 'deg)';
-        setTimeout(() => {
-          sacabambaspisSvg.style.transform = '';
-        }, 220);
-      }
-
-      if (fishMouth) {
-        fishMouth.setAttribute('points', '64,106 48,115 64,124');
-        setTimeout(() => {
-          fishMouth.setAttribute('points', '62,110 52,115 62,120');
-        }, 280);
-      }
-
-      createBubbles(4);
-    }
-
-    function createBubbles(count = 3) {
-      if (!fishTank) return;
-      for (let i = 0; i < count; i++) {
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble-particle';
-        const size = Math.floor(Math.random() * 15) + 12;
-        bubble.style.width = size + 'px';
-        bubble.style.height = size + 'px';
-        const startX = 60 + Math.random() * 50;
-        const startY = 80 + Math.random() * 60;
-        bubble.style.left = startX + 'px';
-        bubble.style.top = startY + 'px';
-        bubble.style.setProperty('--tx', (Math.random() * 60 - 30) + 'px');
-        fishTank.appendChild(bubble);
-
-        setTimeout(() => bubble.remove(), 1800);
-      }
-    }
-
-    function toggleHelmet() {
-      helmetOn = !helmetOn;
-      if (safetyHelmet) {
-        safetyHelmet.style.opacity = helmetOn ? '1' : '0';
-        safetyHelmet.style.pointerEvents = helmetOn ? 'auto' : 'none';
-      }
-      if (helmetStatusText) {
-        helmetStatusText.textContent = helmetOn ? '開啟' : '關閉';
-      }
-      petSacabambaspis(helmetOn ? "⛑️ 工安帽 Pro 戴好！現場高空作業嚴格遵守防墜安全！" : "✨ 脫下安全帽吹吹風！施工現場隨時落實安全規範喔！");
-    }
-
-    function burstBubbles() {
-      createBubbles(10);
-      petSacabambaspis("🫧 咕嚕嚕！釋放能量水波氣泡～弘明衝勁十足！");
-    }
-
-    function feedFish() {
-      petSacabambaspis("🌿 嗷嗚！收到新鮮水草～體能滿格，派工調度全力以赴！💪");
-      createBubbles(6);
-    }
-
-    // Event listeners
-    if (fishTank) fishTank.addEventListener('click', () => petSacabambaspis());
-    if (speechBubble) speechBubble.addEventListener('click', () => petSacabambaspis());
-    document.getElementById('btnPetFish')?.addEventListener('click', () => petSacabambaspis());
-    document.getElementById('btnToggleHelmet')?.addEventListener('click', toggleHelmet);
-    document.getElementById('btnBubbleBurst')?.addEventListener('click', burstBubbles);
-    document.getElementById('btnFeedWeed')?.addEventListener('click', feedFish);
-
-    document.getElementById('navFishTrigger')?.addEventListener('click', () => {
-      petSacabambaspis("🐟 嗨！我是導覽列上的薩卡班小甲魚，歡迎參觀弘明的 Apple 風格履歷！");
-      const target = document.getElementById('mascot');
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // 3. Dynamic Cursor Eye Tracking
-    window.addEventListener('mousemove', (e) => {
-      if (pupilLeft && pupilRight) {
-        const leftBox = pupilLeft.getBoundingClientRect();
-        const rightBox = pupilRight.getBoundingClientRect();
-
-        const dxL = e.clientX - (leftBox.left + leftBox.width / 2);
-        const dyL = e.clientY - (leftBox.top + leftBox.height / 2);
-        const angleL = Math.atan2(dyL, dxL);
-        const distL = Math.min(4.5, Math.hypot(dxL, dyL) / 30);
-        pupilLeft.setAttribute('cx', 77 + Math.cos(angleL) * distL);
-        pupilLeft.setAttribute('cy', 95 + Math.sin(angleL) * distL);
-
-        const dxR = e.clientX - (rightBox.left + rightBox.width / 2);
-        const dyR = e.clientY - (rightBox.top + rightBox.height / 2);
-        const angleR = Math.atan2(dyR, dxR);
-        const distR = Math.min(4.5, Math.hypot(dxR, dyR) / 30);
-        pupilRight.setAttribute('cx', 77 + Math.cos(angleR) * distR);
-        pupilRight.setAttribute('cy', 135 + Math.sin(angleR) * distR);
-      }
-
-      if (floatingPupil1 && floatingPupil2) {
-        const fBox = floatingPupil1.getBoundingClientRect();
-        const dx = e.clientX - fBox.left;
-        const dy = e.clientY - fBox.top;
-        const angle = Math.atan2(dy, dx);
-        const dist = Math.min(2.5, Math.hypot(dx, dy) / 40);
-        floatingPupil1.setAttribute('cx', 30 + Math.cos(angle) * dist);
-        floatingPupil1.setAttribute('cy', 27 + Math.sin(angle) * dist);
-        floatingPupil2.setAttribute('cx', 54 + Math.cos(angle) * dist);
-        floatingPupil2.setAttribute('cy', 27 + Math.sin(angle) * dist);
-      }
-    });
-
-    // Touch support for eyes
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        window.dispatchEvent(new MouseEvent('mousemove', {
-          clientX: touch.clientX,
-          clientY: touch.clientY
-        }));
-      }
-    }, { passive: true });
-
-    // 4. Floating Widget Interaction
-    const floatingFishBtn = document.getElementById('floatingFishBtn');
-    const companionBubble = document.getElementById('companionBubble');
-    const companionQuotes = [
-      "（◉▼◉）弘明現場工程超認真！",
-      "高空作業車操作一把罩！🦺",
-      "水電配管配線難不倒！⚡",
-      "咕嚕嚕～點我回到最上方！",
-      "上銀科技嚴格SOP養成！🏭",
-      "抗壓耐操，配合度滿點！💪"
-    ];
-
-    if (floatingFishBtn) {
-      floatingFishBtn.addEventListener('click', () => {
-        const randomQuote = companionQuotes[Math.floor(Math.random() * companionQuotes.length)];
-        if (companionBubble) {
-          companionBubble.textContent = randomQuote;
-          companionBubble.style.transform = 'scale(1.08)';
-          setTimeout(() => companionBubble.style.transform = 'scale(1)', 220);
-        }
-        petCount++;
-        if (petCountEl) petCountEl.textContent = petCount;
+    // 2. Smooth Floating Card Dynamic Shadow Physics on Mouse Move
+    document.querySelectorAll('.floating-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -1.8;
+        const rotateY = ((x - centerX) / centerX) * 1.8;
+        card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       });
-    }
 
-    if (companionBubble) {
-      companionBubble.addEventListener('click', () => {
-        const target = document.getElementById('mascot');
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
       });
-    }
+    });
   </script>
 </body>
 </html>
