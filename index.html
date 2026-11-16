@@ -737,6 +737,321 @@
     }
 
     /* ========================================================
+       INDUSTRY ANALYSIS & BLOCKCHAIN SECTION STYLING
+       ======================================================== */
+    .industry-lead-text {
+      font-size: 1.02rem;
+      color: #d1d5db;
+      line-height: 1.85;
+      margin-bottom: 26px;
+    }
+
+    .industry-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .industry-metric-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 0, 0.22);
+      border-radius: 20px;
+      padding: 20px 18px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .industry-metric-box:hover {
+      transform: translateY(-5px);
+      border-color: var(--orange-primary);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 107, 0, 0.25);
+      background: rgba(255, 107, 0, 0.05);
+    }
+
+    .industry-metric-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange-primary), transparent);
+    }
+
+    .metric-number-wrap {
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: var(--orange-glow);
+      font-family: var(--font-family);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .metric-number-wrap .metric-unit {
+      font-size: 0.95rem;
+      color: var(--orange-amber);
+      font-weight: 600;
+    }
+
+    .metric-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .metric-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Interactive Energy & Blockchain Circuit Canvas Container */
+    .industry-anim-container {
+      background: rgba(8, 10, 16, 0.92);
+      border: 1px solid rgba(255, 107, 0, 0.32);
+      border-radius: 22px;
+      padding: 24px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85), 0 12px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .anim-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .anim-title-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--orange-light);
+    }
+
+    .anim-controls-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .anim-toggle-btn {
+      padding: 6px 14px;
+      border-radius: 980px;
+      background: rgba(255, 107, 0, 0.15);
+      border: 1px solid rgba(255, 107, 0, 0.38);
+      color: var(--orange-glow);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .anim-toggle-btn:hover {
+      background: var(--orange-primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.4);
+    }
+
+    .anim-canvas-wrapper {
+      position: relative;
+      width: 100%;
+      height: 230px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #0d121c 0%, #05070a 100%);
+      border: 1px solid rgba(255, 107, 0, 0.22);
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+      cursor: crosshair;
+    }
+
+    #industry-flow-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Blockchain Visual Chain Pipeline */
+    .blockchain-flow-dock {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      position: relative;
+    }
+
+    .bc-node-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 107, 0, 0.24);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .bc-node-item:hover {
+      background: rgba(255, 107, 0, 0.08);
+      border-color: var(--orange-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 107, 0, 0.2);
+    }
+
+    .bc-node-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .bc-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 980px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: #34d399;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .bc-node-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .bc-node-hash {
+      font-family: "SF Mono", Consolas, Menlo, Monaco, monospace;
+      font-size: 0.73rem;
+      color: var(--orange-amber);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 3px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: 1px solid rgba(255, 107, 0, 0.15);
+    }
+
+    .bc-node-detail {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      line-height: 1.45;
+    }
+
+    /* Four Pillars Analysis Cards Grid */
+    .industry-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .pillar-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 0, 0.18);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--orange-primary);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.6), 0 0 22px rgba(255, 107, 0, 0.2);
+      background: rgba(255, 107, 0, 0.04);
+    }
+
+    .pillar-card-top h3 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pillar-card-top p {
+      font-size: 0.91rem;
+      color: #d1d5db;
+      line-height: 1.68;
+    }
+
+    .pillar-key-takeaway {
+      margin-top: 12px;
+      padding: 9px 13px;
+      background: rgba(255, 107, 0, 0.08);
+      border-left: 3px solid var(--orange-primary);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.83rem;
+      color: var(--orange-light);
+      line-height: 1.5;
+    }
+
+    .pillar-links-dock {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255, 107, 0, 0.18);
+    }
+
+    .industry-source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--orange-glow);
+      text-decoration: none;
+      padding: 5px 11px;
+      border-radius: 980px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 0, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .industry-source-link:hover {
+      background: rgba(255, 107, 0, 0.22);
+      border-color: var(--orange-primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    }
+
+    .industry-source-link .link-arrow {
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+
+    /* ========================================================
        INTERACTIVE AQUARIUM COMPONENT STYLING
        ======================================================== */
     .aquarium-card {
@@ -1036,6 +1351,8 @@
       #scroll-progress, 
       .floating-action-dock, 
       .aquarium-card, 
+      .industry-anim-container,
+      .anim-controls-tag,
       .nav-actions {
         display: none !important;
       }
@@ -1099,6 +1416,7 @@
       <ul class="nav-menu">
         <li><a href="#hero" class="nav-pill active" data-target="hero">首頁</a></li>
         <li><a href="#summary" class="nav-pill" data-target="summary">個人簡介</a></li>
+        <li><a href="#industry" class="nav-pill" data-target="industry">⚡ 產業分析</a></li>
         <li><a href="#aquarium" class="nav-pill" data-target="aquarium">🐟 水族箱</a></li>
         <li><a href="#experience" class="nav-pill" data-target="experience">工作經歷</a></li>
         <li><a href="#skills" class="nav-pill" data-target="skills">專業技能</a></li>
@@ -1220,6 +1538,203 @@
           <div class="summary-mini-card">
             <strong>💪 體能充足與高效協作</strong>
             <p>具備極高抗壓耐受度與體能優勢，主動配合主管派工調度，有效排除現場問題。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         INDUSTRY ANALYSIS & BLOCKCHAIN SECTION
+         ======================================================== -->
+    <section class="floating-card" id="industry">
+      <h2 class="section-float-title">
+        <span class="title-orange-dot"></span>
+        水電與機電工程產業分析 · 數位前瞻趨勢
+        <span class="section-subtitle">Industry Insights & Smart Grid Blockchain</span>
+      </h2>
+
+      <p class="industry-lead-text">
+        面對 2025–2026 年全球人工智慧（AI）算力擴張、半導體先進製程擴廠潮，以及國家「2050 淨零排放路徑」法規要求，台灣水電、機電工程與廠務系統迎來深遠的產業升級轉型。工程施作已由早期基礎配管接線，全方位躍升為涵蓋<strong>精密製造無塵室機電、伺服器液冷散熱管路（Liquid Cooling）、智慧電表 AMI、建築能源管理系統（EMS）乃至於點對點綠電憑證（T-REC）區塊鏈數位存證</strong>之高技術密集成熟領域。
+      </p>
+
+      <!-- Key Real Data Counters -->
+      <div class="industry-metrics-grid">
+        <div class="industry-metric-box">
+          <div class="metric-number-wrap">
+            <span class="industry-counter" data-target="4800">0</span><span class="metric-unit">億+ NTD</span>
+          </div>
+          <div class="metric-title">台灣機電與營造年產值</div>
+          <div class="metric-desc">受 AI 科技廠辦與公共基礎建設雙引擎強力推升</div>
+        </div>
+
+        <div class="industry-metric-box">
+          <div class="metric-number-wrap">
+            <span class="industry-counter" data-target="2.5" data-decimal="1">0</span><span class="metric-unit">年</span>
+          </div>
+          <div class="metric-title">高科技廠務訂單能見度</div>
+          <div class="metric-desc">先進晶圓與 CoWoS 封測擴建，無塵室工程供不應求</div>
+        </div>
+
+        <div class="industry-metric-box">
+          <div class="metric-number-wrap">
+            <span class="industry-counter" data-target="32.8" data-decimal="1">0</span><span class="metric-unit">%</span>
+          </div>
+          <div class="metric-title">專業技術人才缺工比率</div>
+          <div class="metric-desc">勞動部統計傳統工種世代斷層，持照施工人員極具身價</div>
+        </div>
+
+        <div class="industry-metric-box">
+          <div class="metric-number-wrap">
+            <span class="industry-counter" data-target="2050">0</span><span class="metric-unit">年</span>
+          </div>
+          <div class="metric-title">國家法定淨零轉型目標</div>
+          <div class="metric-desc">全台新建案強制導入智慧電表與高能效智慧機電規範</div>
+        </div>
+      </div>
+
+      <!-- Interactive Canvas & Blockchain Circuit Dynamic Animation -->
+      <div class="industry-anim-container">
+        <div class="anim-top-bar">
+          <div class="anim-title-tag">
+            <span>⚡</span>
+            <span>水電機電能源脈衝與分散式電網區塊鏈流向模擬 (Interactive Energy & Blockchain Circuit)</span>
+          </div>
+          <div class="anim-controls-tag">
+            <button class="anim-toggle-btn" id="btn-flow-toggle">⏸️ 暫停流動</button>
+            <button class="anim-toggle-btn" id="btn-flow-speed">⚡ 切換流速</button>
+          </div>
+        </div>
+
+        <div class="anim-canvas-wrapper" id="industry-canvas-frame" title="移動滑鼠可引發電磁交互感應">
+          <canvas id="industry-flow-canvas"></canvas>
+        </div>
+
+        <!-- Blockchain Verification Chain Nodes -->
+        <div class="blockchain-flow-dock">
+          <div class="bc-node-item">
+            <div class="bc-node-header">
+              <span class="bc-node-title">☀️ 節點 #01：綠能發電併網</span>
+              <span class="bc-badge">Genesis ✓</span>
+            </div>
+            <div class="bc-node-hash" id="hash-node-1">Hash: 0x8a9c...4f21</div>
+            <div class="bc-node-detail">屋頂太陽光電與儲能逆變器產出 1,850 kWh 綠電數據</div>
+          </div>
+
+          <div class="bc-node-item">
+            <div class="bc-node-header">
+              <span class="bc-node-title">⚡ 節點 #02：智慧電表 AMI</span>
+              <span class="bc-badge">Verified ✓</span>
+            </div>
+            <div class="bc-node-hash" id="hash-node-2">Hash: 0x3d7b...e109</div>
+            <div class="bc-node-detail">台電智慧雙向計量即時採樣，經由配電箱 EMS 數位加密</div>
+          </div>
+
+          <div class="bc-node-item">
+            <div class="bc-node-header">
+              <span class="bc-node-title">🏗️ 節點 #03：高空管線施作</span>
+              <span class="bc-badge">Verified ✓</span>
+            </div>
+            <div class="bc-node-hash" id="hash-node-3">Hash: 0x91cf...77aa</div>
+            <div class="bc-node-detail">榮信/上銀工安標準：高空作業車操作、落實強電耐震與絕緣規範</div>
+          </div>
+
+          <div class="bc-node-item">
+            <div class="bc-node-header">
+              <span class="bc-node-title">⛓️ 節點 #04：T-REC 綠電憑證</span>
+              <span class="bc-badge">Consensus ✓</span>
+            </div>
+            <div class="bc-node-hash" id="hash-node-4">Hash: 0x5e20...bc34</div>
+            <div class="bc-node-detail">智慧合約執行 P2P 綠電驗證，消除多重計價、杜絕漂綠</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Core Pillars with Real Hyperlinks -->
+      <div class="industry-pillars-grid">
+        <!-- Pillar 1 -->
+        <div class="pillar-card">
+          <div class="pillar-card-top">
+            <h3><span>🏭</span> AI 算力與先進半導體廠務需求爆發</h3>
+            <p>
+              台積電、日月光等半導體龍頭因應 AI 晶片暴增需求，加速擴建先進晶圓廠與 CoWoS 封裝產能，使得高密度強電迴路、不斷電 UPS 系統、超純水、製程冷卻水（PCW）及最新的<strong>高階伺服器液冷散熱管路（Liquid Cooling）</strong>成為水電機電工程的核心戰場。施作標準由傳統土木配管全面升級至毫米級公差與嚴苛之無塵室防護。
+            </p>
+            <div class="pillar-key-takeaway">
+              <strong>實務對應：</strong>具備上銀科技精密零組件組裝檢驗之規範認知，能精確落實高標準工程公差與 SOP。
+            </div>
+          </div>
+          <div class="pillar-links-dock">
+            <a href="https://www.ida.gov.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🏛️ 經濟部產業發展署</span><span class="link-arrow">↗</span>
+            </a>
+            <a href="https://www.wealth.com.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>📰 財訊：先進封裝與廠務機電大廠滿單分析</span><span class="link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="pillar-card">
+          <div class="pillar-card-top">
+            <h3><span>🌱</span> 國家 2050 淨零路徑與綠建築法規</h3>
+            <p>
+              依據國家發展委員會「2050 淨零排放路徑」及內政部建築能效標示（BERS），公私立新建案與廠房全面強制導入<strong>智慧電表（AMI）、數位能源管理系統（EMS）、智慧節水與雨水貯留回收</strong>。水電工程從過去單純的「施工配管」演變為「智慧綠建築能源系統骨幹」，電氣與弱電自動化控制之整合能力已成為不可或缺的專業門檻。
+            </p>
+            <div class="pillar-key-takeaway">
+              <strong>實務對應：</strong>科班水電技術教育（治平高中水電科）奠定之室內配線、電工量測與管路基礎，利於快速對接新世代綠建築。
+            </div>
+          </div>
+          <div class="pillar-links-dock">
+            <a href="https://www.ndc.gov.tw/Content_List.aspx?n=DEE6F40EAC04819E" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🏛️ 國發會：臺灣 2050 淨零轉型路徑</span><span class="link-arrow">↗</span>
+            </a>
+            <a href="https://www.nlma.gov.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🏛️ 內政部國土管理署：智慧綠建築專區</span><span class="link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="pillar-card">
+          <div class="pillar-card-top">
+            <h3><span>⚠️</span> 人口結構斷層與持照工安人才身價</h3>
+            <p>
+              台灣已邁入超高齡社會，少子化疊加傳統營造水電 3K（辛苦、骯髒、危險）標籤，造成一線師傅年齡老化、青年新血青黃不接。然而，現代高科技案場對職業安全衛生管理（OSHA）極為嚴格，<strong>持有「高空作業車操作證照」且具備良好體能、嚴守防墜規章與耐受高強度現場調度之青年技術人員</strong>，在市場上已具備極高的不可替代性與議價空間。
+            </p>
+            <div class="pillar-key-takeaway">
+              <strong>實務對應：</strong>陳弘明持有「高空作業車操作人員合格證照」，於榮信企業社期間保持高空施作零工安事故，契合產業最迫切需求。
+            </div>
+          </div>
+          <div class="pillar-links-dock">
+            <a href="https://www.wda.gov.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🏛️ 勞動部勞動力發展署：工程技術人才分析</span><span class="link-arrow">↗</span>
+            </a>
+            <a href="https://www.osha.gov.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🛡️ 勞動部職安署：高處與高空作業車安全標準</span><span class="link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="pillar-card">
+          <div class="pillar-card-top">
+            <h3><span>⛓️</span> 分散式微電網與「綠電交易區塊鏈」</h3>
+            <p>
+              隨著屋頂太陽光電、社區儲能及《電業法》綠電市場自由化，電力傳輸體系正由台電單向集中式供應轉化為區域「分散式微電網（Microgrid）」。產官學界（台電、工研院、民營售電業者）積極運用<strong>區塊鏈（Blockchain）之分散式帳本與智慧合約技術</strong>，落實綠電憑證（T-REC）核銷、P2P 電能轉供交易與用電數據防偽溯源，徹底杜絕重複認列與「漂綠」爭議。
+            </p>
+            <div class="pillar-key-takeaway">
+              <strong>實務對應：</strong>未來水電技術人員除了傳統施工，更將參與微電網感測器、智慧電表通信模組及現場逆變器之安裝校正。
+            </div>
+          </div>
+          <div class="pillar-links-dock">
+            <a href="https://www.taipower.com.tw/tc/page.aspx?mid=242" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>⚡ 台電公司：智慧電網與再生能源推動</span><span class="link-arrow">↗</span>
+            </a>
+            <a href="https://www.moeaea.gov.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🏛️ 經濟部能源署：綠電自由化與再生能源憑證</span><span class="link-arrow">↗</span>
+            </a>
+            <a href="https://www.itri.org.tw/" target="_blank" rel="noopener noreferrer" class="industry-source-link">
+              <span>🔬 工研院：智慧微電網與能源物聯網架構</span><span class="link-arrow">↗</span>
+            </a>
           </div>
         </div>
       </div>
@@ -1454,6 +1969,9 @@
     </a>
     <a href="mailto:a0903333611@icloud.com" class="floating-dock-btn" title="發送電子郵件">
       ✉️
+    </a>
+    <a href="#industry" class="floating-dock-btn" title="查看水電產業分析與前瞻區塊鏈">
+      ⚡
     </a>
     <a href="#aquarium" class="floating-dock-btn" title="前往互動水族箱">
       🐟
@@ -2368,6 +2886,343 @@
         });
       }
     })();
+
+    /* ========================================================
+       4. INDUSTRY ANALYSIS & SMART GRID BLOCKCHAIN SIMULATION
+       ======================================================== */
+    (function initIndustryAnalysis() {
+      // (A) Animated Number Counters via IntersectionObserver
+      const counterElements = document.querySelectorAll('.industry-counter');
+      let countersStarted = false;
+
+      function startCounters() {
+        if (countersStarted) return;
+        countersStarted = true;
+
+        counterElements.forEach(el => {
+          const target = parseFloat(el.getAttribute('data-target'));
+          const decimals = parseInt(el.getAttribute('data-decimal') || '0', 10);
+          const duration = 1800; // ms
+          const startTime = performance.now();
+
+          function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentVal = easeOut * target;
+
+            if (target === 2.5) {
+              el.textContent = progress >= 0.9 ? '2 ~ 3' : (currentVal * 1.2).toFixed(1);
+            } else if (decimals > 0) {
+              el.textContent = currentVal.toFixed(decimals);
+            } else {
+              el.textContent = Math.floor(currentVal).toLocaleString('en-US');
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            } else {
+              if (target === 2.5) el.textContent = '2 ~ 3';
+              else if (decimals > 0) el.textContent = target.toFixed(decimals);
+              else el.textContent = target.toLocaleString('en-US');
+            }
+          }
+
+          requestAnimationFrame(updateCounter);
+        });
+      }
+
+      const industrySection = document.getElementById('industry');
+      if (industrySection && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              startCounters();
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.25 });
+        observer.observe(industrySection);
+      } else {
+        startCounters();
+      }
+
+      // (B) Simulated Cryptographic Hash Periodic Pulse
+      const hashElements = [
+        document.getElementById('hash-node-1'),
+        document.getElementById('hash-node-2'),
+        document.getElementById('hash-node-3'),
+        document.getElementById('hash-node-4')
+      ];
+
+      function genShortHash() {
+        const chars = '0123456789abcdef';
+        let h1 = '', h2 = '';
+        for (let i = 0; i < 4; i++) h1 += chars[Math.floor(Math.random() * chars.length)];
+        for (let i = 0; i < 4; i++) h2 += chars[Math.floor(Math.random() * chars.length)];
+        return `0x${h1}...${h2}`;
+      }
+
+      setInterval(() => {
+        const randIdx = Math.floor(Math.random() * hashElements.length);
+        const targetEl = hashElements[randIdx];
+        if (targetEl) {
+          targetEl.style.transition = 'color 0.2s ease, transform 0.2s ease';
+          targetEl.style.color = '#34d399';
+          targetEl.style.transform = 'scale(1.04)';
+          targetEl.textContent = `Hash: ${genShortHash()} (Block verified)`;
+          setTimeout(() => {
+            targetEl.style.color = '';
+            targetEl.style.transform = '';
+          }, 800);
+        }
+      }, 4200);
+
+      // (C) Interactive Canvas Circuit & Pipe Flow Engine
+      const canvas = document.getElementById('industry-flow-canvas');
+      const container = document.getElementById('industry-canvas-frame');
+      if (!canvas || !container) return;
+
+      const ctx = canvas.getContext('2d');
+      let width = 0;
+      let height = 0;
+      let dpr = window.devicePixelRatio || 1;
+      let isPaused = false;
+      let speedMultiplier = 1;
+
+      const btnToggle = document.getElementById('btn-flow-toggle');
+      const btnSpeed = document.getElementById('btn-flow-speed');
+
+      if (btnToggle) {
+        btnToggle.addEventListener('click', () => {
+          isPaused = !isPaused;
+          btnToggle.innerHTML = isPaused ? '▶️ 繼續流動' : '⏸️ 暫停流動';
+          btnToggle.style.borderColor = isPaused ? '#f59e0b' : 'rgba(255, 107, 0, 0.38)';
+        });
+      }
+
+      if (btnSpeed) {
+        btnSpeed.addEventListener('click', () => {
+          speedMultiplier = speedMultiplier === 1 ? 1.8 : (speedMultiplier === 1.8 ? 2.5 : 1);
+          btnSpeed.innerHTML = `⚡ 流速: ${speedMultiplier}x`;
+          btnSpeed.style.background = speedMultiplier > 1 ? 'rgba(255, 107, 0, 0.3)' : 'rgba(255, 107, 0, 0.15)';
+        });
+      }
+
+      function resizeCanvas() {
+        width = container.clientWidth;
+        height = container.clientHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.resetTransform?.();
+        ctx.scale(dpr, dpr);
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Mouse interactive wave effect
+      let mouseX = -999;
+      let mouseY = -999;
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      });
+      container.addEventListener('mouseleave', () => {
+        mouseX = -999;
+        mouseY = -999;
+      });
+
+      // Define 5 Core Topology Hub Nodes
+      function getTopologyNodes() {
+        return [
+          { id: 0, label: '☀️ 太陽能/綠電', x: width * 0.12, y: height * 0.50, color: '#f59e0b', ringPulse: 0 },
+          { id: 1, label: '⚡ 智慧電表 AMI', x: width * 0.34, y: height * 0.28, color: '#ff6b00', ringPulse: 0 },
+          { id: 2, label: '💧 PCW液冷管路', x: width * 0.34, y: height * 0.72, color: '#06b6d4', ringPulse: 0 },
+          { id: 3, label: '⛓️ 區塊鏈分散帳本', x: width * 0.65, y: height * 0.30, color: '#10b981', ringPulse: 0 },
+          { id: 4, label: '🏭 AI 高科技廠辦', x: width * 0.88, y: height * 0.52, color: '#ff9f43', ringPulse: 0 }
+        ];
+      }
+
+      // Connecting conduit segments
+      const conduits = [
+        { from: 0, to: 1, type: 'electric' },
+        { from: 0, to: 2, type: 'liquid' },
+        { from: 1, to: 3, type: 'data' },
+        { from: 1, to: 4, type: 'electric' },
+        { from: 2, to: 4, type: 'liquid' },
+        { from: 3, to: 4, type: 'blockchain' }
+      ];
+
+      // Simulated Particle Stream
+      const particles = [];
+      const MAX_PARTICLES = 42;
+
+      for (let i = 0; i < MAX_PARTICLES; i++) {
+        const conduitIdx = i % conduits.length;
+        particles.push({
+          conduitIdx: conduitIdx,
+          progress: Math.random(),
+          speed: (0.003 + Math.random() * 0.004),
+          size: 2.2 + Math.random() * 2.5
+        });
+      }
+
+      let animFrameId = null;
+
+      function renderFlow() {
+        if (!isPaused) {
+          ctx.clearRect(0, 0, width, height);
+
+          const nodes = getTopologyNodes();
+
+          // 1. Draw connecting glowing conduit pipelines
+          conduits.forEach(cd => {
+            const nA = nodes[cd.from];
+            const nB = nodes[cd.to];
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(nA.x, nA.y);
+
+            // Subtle curved line
+            const midX = (nA.x + nB.x) / 2;
+            const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
+            ctx.quadraticCurveTo(midX, midY, nB.x, nB.y);
+
+            if (cd.type === 'electric') {
+              ctx.strokeStyle = 'rgba(255, 107, 0, 0.32)';
+              ctx.lineWidth = 3;
+            } else if (cd.type === 'liquid') {
+              ctx.strokeStyle = 'rgba(6, 182, 212, 0.35)';
+              ctx.lineWidth = 4;
+            } else if (cd.type === 'blockchain') {
+              ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
+              ctx.lineWidth = 2.5;
+              ctx.setLineDash([5, 5]);
+            } else {
+              ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
+              ctx.lineWidth = 2.5;
+              ctx.setLineDash([4, 4]);
+            }
+
+            ctx.stroke();
+            ctx.restore();
+          });
+
+          // 2. Draw and update animated flowing particles
+          particles.forEach(p => {
+            p.progress += p.speed * speedMultiplier;
+            if (p.progress >= 1) {
+              p.progress = 0;
+              p.conduitIdx = Math.floor(Math.random() * conduits.length);
+            }
+
+            const cd = conduits[p.conduitIdx];
+            const nA = nodes[cd.from];
+            const nB = nodes[cd.to];
+            const midX = (nA.x + nB.x) / 2;
+            const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
+
+            // Quadratic Bezier interpolation
+            const t = p.progress;
+            const curX = Math.pow(1 - t, 2) * nA.x + 2 * (1 - t) * t * midX + Math.pow(t, 2) * nB.x;
+            const curY = Math.pow(1 - t, 2) * nA.y + 2 * (1 - t) * t * midY + Math.pow(t, 2) * nB.y;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(curX, curY, p.size, 0, Math.PI * 2);
+
+            if (cd.type === 'electric') {
+              ctx.fillStyle = '#ff7a1a';
+              ctx.shadowColor = '#ff6b00';
+              ctx.shadowBlur = 10;
+            } else if (cd.type === 'liquid') {
+              ctx.fillStyle = '#22d3ee';
+              ctx.shadowColor = '#06b6d4';
+              ctx.shadowBlur = 10;
+            } else if (cd.type === 'blockchain') {
+              ctx.fillStyle = '#34d399';
+              ctx.shadowColor = '#10b981';
+              ctx.shadowBlur = 12;
+            } else {
+              ctx.fillStyle = '#fbbf24';
+              ctx.shadowColor = '#f59e0b';
+              ctx.shadowBlur = 10;
+            }
+
+            ctx.fill();
+            ctx.restore();
+          });
+
+          // 3. Draw mouse interactive electromagnetic beacon ripple
+          if (mouseX > 0 && mouseY > 0) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(mouseX, mouseY, 28, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255, 107, 0, 0.45)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(mouseX, mouseY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff6b00';
+            ctx.shadowColor = '#ff6b00';
+            ctx.shadowBlur = 14;
+            ctx.fill();
+            ctx.restore();
+          }
+
+          // 4. Render Nodes & Labels
+          nodes.forEach((n, idx) => {
+            ctx.save();
+
+            // Outer pulse ring
+            const pulseSize = 14 + Math.sin(Date.now() * 0.004 + idx) * 3;
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, pulseSize + 4, 0, Math.PI * 2);
+            ctx.strokeStyle = n.color;
+            ctx.globalAlpha = 0.28;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+
+            // Core circle
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 11, 0, Math.PI * 2);
+            ctx.fillStyle = '#0f1118';
+            ctx.fill();
+            ctx.strokeStyle = n.color;
+            ctx.lineWidth = 2.5;
+            ctx.shadowColor = n.color;
+            ctx.shadowBlur = 12;
+            ctx.stroke();
+
+            // Center glow pip
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2);
+            ctx.fillStyle = n.color;
+            ctx.fill();
+
+            // Node Text Label
+            ctx.font = '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#f3f4f6';
+            ctx.textAlign = 'center';
+            ctx.shadowBlur = 0;
+            ctx.fillText(n.label, n.x, n.y + 24);
+
+            ctx.restore();
+          });
+        }
+
+        animFrameId = requestAnimationFrame(renderFlow);
+      }
+
+      renderFlow();
+    })();
+
   </script>
 </body>
 </html>
