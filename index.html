@@ -59,48 +59,40 @@
         radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.12) 0%, transparent 60%),
         radial-gradient(circle at 10% 40%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 90% 70%, rgba(234, 88, 12, 0.08) 0%, transparent 55%);
-      background-attachment: fixed;
+      
     }
 
     /* Ambient Drifting Floating Orbs */
+        /* Hardware-accelerated High Performance Ambient Background */
     .ambient-drift {
       position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
       pointer-events: none;
       z-index: 0;
-      animation: driftFloat 18s ease-in-out infinite alternate;
+      opacity: 0.85;
+      transform: translate3d(0, 0, 0);
     }
-
     .orb-1 {
-      top: 5%;
-      left: 20%;
-      width: 480px;
-      height: 480px;
-      background: radial-gradient(circle, rgba(255, 107, 0, 0.18), transparent 70%);
-      animation-duration: 16s;
-    }
-
-    .orb-2 {
-      top: 50%;
-      right: 10%;
+      top: -80px;
+      left: 10%;
       width: 520px;
       height: 520px;
-      background: radial-gradient(circle, rgba(234, 88, 12, 0.14), transparent 70%);
-      animation-duration: 20s;
+      background: radial-gradient(circle, rgba(255, 107, 0, 0.16) 0%, rgba(255, 107, 0, 0.04) 50%, transparent 70%);
     }
-
-    .orb-3 {
-      bottom: 5%;
-      left: 10%;
+    .orb-2 {
+      top: 40%;
+      right: -80px;
       width: 550px;
       height: 550px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
-      animation-duration: 22s;
+      background: radial-gradient(circle, rgba(234, 88, 12, 0.14) 0%, rgba(234, 88, 12, 0.03) 50%, transparent 70%);
     }
-
-    @keyframes driftFloat {
-      0% { transform: translate(0, 0) scale(1); }
+    .orb-3 {
+      bottom: -80px;
+      left: 5%;
+      width: 580px;
+      height: 580px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.02) 50%, transparent 70%);
+    }
       50% { transform: translate(30px, -25px) scale(1.08); }
       100% { transform: translate(-25px, 20px) scale(0.95); }
     }
@@ -1730,53 +1722,43 @@
     const navPills = document.querySelectorAll('.nav-pill');
     const trackedSections = document.querySelectorAll('section[id]');
 
+        let scrollTicking = false;
     window.addEventListener('scroll', () => {
-      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-      if (progressBar) progressBar.style.width = scrolled + '%';
+      if (!scrollTicking) {
+        window.requestAnimationFrame(() => {
+          const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+          if (progressBar) progressBar.style.width = scrolled + '%';
 
-      let currentSectionId = '';
-      const offsetTop = window.scrollY + 180;
+          let currentSectionId = '';
+          const offsetTop = winScroll + 180;
 
-      trackedSections.forEach(sec => {
-        const top = sec.offsetTop;
-        const h = sec.offsetHeight;
-        if (offsetTop >= top && offsetTop < top + h) {
-          currentSectionId = sec.getAttribute('id');
-        }
-      });
+          trackedSections.forEach(sec => {
+            const top = sec.offsetTop;
+            const h = sec.offsetHeight;
+            if (offsetTop >= top && offsetTop < top + h) {
+              currentSectionId = sec.getAttribute('id');
+            }
+          });
 
-      if (currentSectionId) {
-        navPills.forEach(pill => {
-          if (pill.getAttribute('data-target') === currentSectionId) {
-            pill.classList.add('active');
-          } else {
-            pill.classList.remove('active');
+          if (currentSectionId) {
+            navPills.forEach(pill => {
+              if (pill.getAttribute('data-target') === currentSectionId) {
+                pill.classList.add('active');
+              } else {
+                pill.classList.remove('active');
+              }
+            });
           }
+          scrollTicking = false;
         });
+        scrollTicking = true;
       }
-    });
+    }, { passive: true });
 
-    /* ========================================================
-       2. Smooth Floating Card Dynamic Shadow Physics on Mouse Move
-       ======================================================== */
-    document.querySelectorAll('.floating-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -1.5;
-        const rotateY = ((x - centerX) / centerX) * 1.5;
-        card.style.transform = `translateY(-6px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
+        /* 2. Hardware-accelerated Smooth Card Hover */
+    // Pure CSS transforms are handled by the compositor thread
 
     /* ========================================================
        4. INDUSTRY ANALYSIS & SMART GRID BLOCKCHAIN SIMULATION
@@ -1870,17 +1852,19 @@
         }
       }, 4200);
 
-      // (C) Interactive Canvas Circuit & Pipe Flow Engine
+            // (C) Ultra High-Performance Canvas Circuit & Pipe Flow Engine
       const canvas = document.getElementById('industry-flow-canvas');
       const container = document.getElementById('industry-canvas-frame');
       if (!canvas || !container) return;
 
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: true });
       let width = 0;
       let height = 0;
-      let dpr = window.devicePixelRatio || 1;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2 to save GPU on high-res mobile
       let isPaused = false;
+      let isVisible = false;
       let speedMultiplier = 1;
+      let cachedNodes = [];
 
       const btnToggle = document.getElementById('btn-flow-toggle');
       const btnSpeed = document.getElementById('btn-flow-speed');
@@ -1890,6 +1874,9 @@
           isPaused = !isPaused;
           btnToggle.innerHTML = isPaused ? '▶️ 繼續流動' : '⏸️ 暫停流動';
           btnToggle.style.borderColor = isPaused ? '#f59e0b' : 'rgba(255, 107, 0, 0.38)';
+          if (!isPaused && isVisible && !animFrameId) {
+            animFrameId = requestAnimationFrame(renderFlow);
+          }
         });
       }
 
@@ -1901,217 +1888,203 @@
         });
       }
 
+      function updateTopologyNodes() {
+        cachedNodes = [
+          { id: 0, label: '☀️ 太陽能/綠電', x: width * 0.12, y: height * 0.50, color: '#f59e0b', halo: 'rgba(245, 158, 11, 0.25)' },
+          { id: 1, label: '⚡ 智慧電表 AMI', x: width * 0.34, y: height * 0.28, color: '#ff6b00', halo: 'rgba(255, 107, 0, 0.25)' },
+          { id: 2, label: '💧 PCW液冷管路', x: width * 0.34, y: height * 0.72, color: '#06b6d4', halo: 'rgba(6, 182, 212, 0.25)' },
+          { id: 3, label: '⛓️ 區塊鏈分散帳本', x: width * 0.65, y: height * 0.30, color: '#10b981', halo: 'rgba(16, 185, 129, 0.25)' },
+          { id: 4, label: '🏭 AI 高科技廠辦', x: width * 0.88, y: height * 0.52, color: '#ff9f43', halo: 'rgba(255, 159, 67, 0.25)' }
+        ];
+      }
+
       function resizeCanvas() {
         width = container.clientWidth;
         height = container.clientHeight;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
         ctx.resetTransform?.();
         ctx.scale(dpr, dpr);
+        updateTopologyNodes();
       }
-      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('resize', resizeCanvas, { passive: true });
       resizeCanvas();
 
-      // Mouse interactive wave effect
+      // Mouse interactive wave effect with passive listener
       let mouseX = -999;
       let mouseY = -999;
       container.addEventListener('mousemove', (e) => {
         const rect = container.getBoundingClientRect();
         mouseX = e.clientX - rect.left;
         mouseY = e.clientY - rect.top;
-      });
+      }, { passive: true });
       container.addEventListener('mouseleave', () => {
         mouseX = -999;
         mouseY = -999;
-      });
+      }, { passive: true });
 
-      // Define 5 Core Topology Hub Nodes
-      function getTopologyNodes() {
-        return [
-          { id: 0, label: '☀️ 太陽能/綠電', x: width * 0.12, y: height * 0.50, color: '#f59e0b', ringPulse: 0 },
-          { id: 1, label: '⚡ 智慧電表 AMI', x: width * 0.34, y: height * 0.28, color: '#ff6b00', ringPulse: 0 },
-          { id: 2, label: '💧 PCW液冷管路', x: width * 0.34, y: height * 0.72, color: '#06b6d4', ringPulse: 0 },
-          { id: 3, label: '⛓️ 區塊鏈分散帳本', x: width * 0.65, y: height * 0.30, color: '#10b981', ringPulse: 0 },
-          { id: 4, label: '🏭 AI 高科技廠辦', x: width * 0.88, y: height * 0.52, color: '#ff9f43', ringPulse: 0 }
-        ];
-      }
-
-      // Connecting conduit segments
       const conduits = [
-        { from: 0, to: 1, type: 'electric' },
-        { from: 0, to: 2, type: 'liquid' },
-        { from: 1, to: 3, type: 'data' },
-        { from: 1, to: 4, type: 'electric' },
-        { from: 2, to: 4, type: 'liquid' },
-        { from: 3, to: 4, type: 'blockchain' }
+        { from: 0, to: 1, type: 'electric', style: 'rgba(255, 107, 0, 0.35)', width: 3, dash: [] },
+        { from: 0, to: 2, type: 'liquid', style: 'rgba(6, 182, 212, 0.35)', width: 3.5, dash: [] },
+        { from: 1, to: 3, type: 'data', style: 'rgba(245, 158, 11, 0.35)', width: 2.2, dash: [4, 4] },
+        { from: 1, to: 4, type: 'electric', style: 'rgba(255, 107, 0, 0.35)', width: 3, dash: [] },
+        { from: 2, to: 4, type: 'liquid', style: 'rgba(6, 182, 212, 0.35)', width: 3.5, dash: [] },
+        { from: 3, to: 4, type: 'blockchain', style: 'rgba(16, 185, 129, 0.35)', width: 2.2, dash: [5, 5] }
       ];
 
-      // Simulated Particle Stream
+      const typeStyles = {
+        electric: { core: '#ff7a1a', halo: 'rgba(255, 107, 0, 0.28)' },
+        liquid: { core: '#22d3ee', halo: 'rgba(6, 182, 212, 0.28)' },
+        blockchain: { core: '#34d399', halo: 'rgba(16, 185, 129, 0.28)' },
+        data: { core: '#fbbf24', halo: 'rgba(245, 158, 11, 0.28)' }
+      };
+
       const particles = [];
-      const MAX_PARTICLES = 42;
+      const MAX_PARTICLES = 32;
 
       for (let i = 0; i < MAX_PARTICLES; i++) {
         const conduitIdx = i % conduits.length;
         particles.push({
           conduitIdx: conduitIdx,
           progress: Math.random(),
-          speed: (0.003 + Math.random() * 0.004),
-          size: 2.2 + Math.random() * 2.5
+          speed: (0.003 + Math.random() * 0.0035),
+          size: 2.2 + Math.random() * 2
         });
       }
 
       let animFrameId = null;
 
       function renderFlow() {
-        if (!isPaused) {
-          ctx.clearRect(0, 0, width, height);
+        if (!isVisible || isPaused) {
+          animFrameId = null;
+          return;
+        }
 
-          const nodes = getTopologyNodes();
+        ctx.clearRect(0, 0, width, height);
 
-          // 1. Draw connecting glowing conduit pipelines
-          conduits.forEach(cd => {
-            const nA = nodes[cd.from];
-            const nB = nodes[cd.to];
+        // 1. Conduits
+        conduits.forEach(cd => {
+          const nA = cachedNodes[cd.from];
+          const nB = cachedNodes[cd.to];
+          ctx.beginPath();
+          ctx.moveTo(nA.x, nA.y);
+          const midX = (nA.x + nB.x) / 2;
+          const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
+          ctx.quadraticCurveTo(midX, midY, nB.x, nB.y);
+          ctx.strokeStyle = cd.style;
+          ctx.lineWidth = cd.width;
+          ctx.setLineDash(cd.dash);
+          ctx.stroke();
+        });
+        ctx.setLineDash([]);
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(nA.x, nA.y);
-
-            // Subtle curved line
-            const midX = (nA.x + nB.x) / 2;
-            const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
-            ctx.quadraticCurveTo(midX, midY, nB.x, nB.y);
-
-            if (cd.type === 'electric') {
-              ctx.strokeStyle = 'rgba(255, 107, 0, 0.32)';
-              ctx.lineWidth = 3;
-            } else if (cd.type === 'liquid') {
-              ctx.strokeStyle = 'rgba(6, 182, 212, 0.35)';
-              ctx.lineWidth = 4;
-            } else if (cd.type === 'blockchain') {
-              ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
-              ctx.lineWidth = 2.5;
-              ctx.setLineDash([5, 5]);
-            } else {
-              ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
-              ctx.lineWidth = 2.5;
-              ctx.setLineDash([4, 4]);
-            }
-
-            ctx.stroke();
-            ctx.restore();
-          });
-
-          // 2. Draw and update animated flowing particles
-          particles.forEach(p => {
-            p.progress += p.speed * speedMultiplier;
-            if (p.progress >= 1) {
-              p.progress = 0;
-              p.conduitIdx = Math.floor(Math.random() * conduits.length);
-            }
-
-            const cd = conduits[p.conduitIdx];
-            const nA = nodes[cd.from];
-            const nB = nodes[cd.to];
-            const midX = (nA.x + nB.x) / 2;
-            const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
-
-            // Quadratic Bezier interpolation
-            const t = p.progress;
-            const curX = Math.pow(1 - t, 2) * nA.x + 2 * (1 - t) * t * midX + Math.pow(t, 2) * nB.x;
-            const curY = Math.pow(1 - t, 2) * nA.y + 2 * (1 - t) * t * midY + Math.pow(t, 2) * nB.y;
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(curX, curY, p.size, 0, Math.PI * 2);
-
-            if (cd.type === 'electric') {
-              ctx.fillStyle = '#ff7a1a';
-              ctx.shadowColor = '#ff6b00';
-              ctx.shadowBlur = 10;
-            } else if (cd.type === 'liquid') {
-              ctx.fillStyle = '#22d3ee';
-              ctx.shadowColor = '#06b6d4';
-              ctx.shadowBlur = 10;
-            } else if (cd.type === 'blockchain') {
-              ctx.fillStyle = '#34d399';
-              ctx.shadowColor = '#10b981';
-              ctx.shadowBlur = 12;
-            } else {
-              ctx.fillStyle = '#fbbf24';
-              ctx.shadowColor = '#f59e0b';
-              ctx.shadowBlur = 10;
-            }
-
-            ctx.fill();
-            ctx.restore();
-          });
-
-          // 3. Draw mouse interactive electromagnetic beacon ripple
-          if (mouseX > 0 && mouseY > 0) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(mouseX, mouseY, 28, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(255, 107, 0, 0.45)';
-            ctx.lineWidth = 1.5;
-            ctx.setLineDash([4, 4]);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(mouseX, mouseY, 4, 0, Math.PI * 2);
-            ctx.fillStyle = '#ff6b00';
-            ctx.shadowColor = '#ff6b00';
-            ctx.shadowBlur = 14;
-            ctx.fill();
-            ctx.restore();
+        // 2. Fast Glowing Particles (Dual-circle halo technique, 0% shadowBlur overhead)
+        particles.forEach(p => {
+          p.progress += p.speed * speedMultiplier;
+          if (p.progress >= 1) {
+            p.progress = 0;
+            p.conduitIdx = Math.floor(Math.random() * conduits.length);
           }
 
-          // 4. Render Nodes & Labels
-          nodes.forEach((n, idx) => {
-            ctx.save();
+          const cd = conduits[p.conduitIdx];
+          const nA = cachedNodes[cd.from];
+          const nB = cachedNodes[cd.to];
+          const midX = (nA.x + nB.x) / 2;
+          const midY = (nA.y + nB.y) / 2 + (cd.type === 'liquid' ? 12 : -12);
 
-            // Outer pulse ring
-            const pulseSize = 14 + Math.sin(Date.now() * 0.004 + idx) * 3;
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, pulseSize + 4, 0, Math.PI * 2);
-            ctx.strokeStyle = n.color;
-            ctx.globalAlpha = 0.28;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+          const t = p.progress;
+          const curX = Math.pow(1 - t, 2) * nA.x + 2 * (1 - t) * t * midX + Math.pow(t, 2) * nB.x;
+          const curY = Math.pow(1 - t, 2) * nA.y + 2 * (1 - t) * t * midY + Math.pow(t, 2) * nB.y;
+          const style = typeStyles[cd.type];
 
-            // Core circle
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, 11, 0, Math.PI * 2);
-            ctx.fillStyle = '#0f1118';
-            ctx.fill();
-            ctx.strokeStyle = n.color;
-            ctx.lineWidth = 2.5;
-            ctx.shadowColor = n.color;
-            ctx.shadowBlur = 12;
-            ctx.stroke();
+          // Soft Halo
+          ctx.beginPath();
+          ctx.arc(curX, curY, p.size * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = style.halo;
+          ctx.fill();
 
-            // Center glow pip
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2);
-            ctx.fillStyle = n.color;
-            ctx.fill();
+          // Bright Core
+          ctx.beginPath();
+          ctx.arc(curX, curY, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = style.core;
+          ctx.fill();
+        });
 
-            // Node Text Label
-            ctx.font = '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-            ctx.fillStyle = '#f3f4f6';
-            ctx.textAlign = 'center';
-            ctx.shadowBlur = 0;
-            ctx.fillText(n.label, n.x, n.y + 24);
+        // 3. Mouse ripple
+        if (mouseX > 0 && mouseY > 0) {
+          ctx.beginPath();
+          ctx.arc(mouseX, mouseY, 26, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 107, 0, 0.4)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 4]);
+          ctx.stroke();
+          ctx.setLineDash([]);
 
-            ctx.restore();
-          });
+          ctx.beginPath();
+          ctx.arc(mouseX, mouseY, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#ff6b00';
+          ctx.fill();
         }
+
+        // 4. Nodes
+        const now = Date.now() * 0.0035;
+        cachedNodes.forEach((n, idx) => {
+          const pulseSize = 13 + Math.sin(now + idx) * 2.5;
+
+          // Outer pulse ring
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, pulseSize + 3, 0, Math.PI * 2);
+          ctx.strokeStyle = n.halo;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Core circle
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 10.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#0f1118';
+          ctx.fill();
+          ctx.strokeStyle = n.color;
+          ctx.lineWidth = 2.2;
+          ctx.stroke();
+
+          // Center Pip
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 4, 0, Math.PI * 2);
+          ctx.fillStyle = n.color;
+          ctx.fill();
+
+          // Label
+          ctx.font = '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillStyle = '#f3f4f6';
+          ctx.textAlign = 'center';
+          ctx.fillText(n.label, n.x, n.y + 24);
+        });
 
         animFrameId = requestAnimationFrame(renderFlow);
       }
 
-      renderFlow();
+      // IntersectionObserver: Automatically stops rendering when out of viewport!
+      if ('IntersectionObserver' in window) {
+        const flowObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isVisible = entry.isIntersecting;
+            if (isVisible && !isPaused) {
+              if (!animFrameId) {
+                animFrameId = requestAnimationFrame(renderFlow);
+              }
+            } else {
+              if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                animFrameId = null;
+              }
+            }
+          });
+        }, { threshold: 0.05 });
+        flowObserver.observe(container);
+      } else {
+        isVisible = true;
+        animFrameId = requestAnimationFrame(renderFlow);
+      }
     })();
 
   </script>
@@ -3009,6 +2982,9 @@
 
 </body>
 </html>
+
+
+
 
 
 
