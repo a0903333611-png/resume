@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
@@ -3224,5 +3224,917 @@
     })();
 
   </script>
+<!-- ========================================================
+     陳弘明個人工程履歷 — 專案導覽 AI 智能助手 (純前端無依賴版)
+     專屬黑橘工業科技風 (Black & Orange Industrial Tech Theme)
+     免 API Key · 打字機效果 · 條理結構 · 一鍵平滑跳轉聚焦
+     ======================================================== -->
+
+<style>
+  /* --- AI 懸浮球與對話視窗樣式 --- */
+  :root {
+    --ai-orange: #ff6b00;
+    --ai-orange-glow: #ff7a1a;
+    --ai-orange-amber: #f59e0b;
+    --ai-bg-glass: rgba(15, 15, 20, 0.92);
+    --ai-border: rgba(255, 107, 0, 0.35);
+    --ai-border-glow: 0 0 20px rgba(255, 107, 0, 0.28);
+  }
+
+  /* 懸浮呼叫按鈕 (Launcher) */
+  .ai-launcher-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px 12px 14px;
+    background: linear-gradient(135deg, #181820 0%, #0d0d12 100%);
+    border: 1.5px solid var(--ai-orange);
+    border-radius: 999px;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 107, 0, 0.35);
+    backdrop-filter: blur(12px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+    font-family: inherit;
+  }
+
+  .ai-launcher-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 107, 0, 0.6);
+    border-color: #ff944d;
+  }
+
+  .ai-launcher-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ai-orange), #ea580c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    box-shadow: 0 0 14px rgba(255, 107, 0, 0.65);
+    position: relative;
+    animation: pulseRing 2.5s infinite;
+  }
+
+  @keyframes pulseRing {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.6); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 107, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+  }
+
+  .ai-launcher-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.25;
+  }
+
+  .ai-launcher-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .ai-launcher-sub {
+    font-size: 0.72rem;
+    color: var(--ai-orange-amber);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ai-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+    display: inline-block;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  /* 對話主視窗 (Modal Chatbox) */
+  .ai-chat-window {
+    position: fixed;
+    bottom: 95px;
+    right: 30px;
+    width: 420px;
+    max-width: calc(100vw - 40px);
+    height: 590px;
+    max-height: calc(100vh - 120px);
+    background: var(--ai-bg-glass);
+    border: 1.5px solid var(--ai-border);
+    border-radius: 22px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), var(--ai-border-glow);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  .ai-chat-window.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+  }
+
+  /* 頂部 Header */
+  .ai-chat-header {
+    padding: 16px 18px;
+    background: rgba(22, 22, 30, 0.95);
+    border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .ai-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ai-header-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ai-orange), #ea580c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
+  }
+
+  .ai-header-info h4 {
+    margin: 0;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .ai-header-info span {
+    font-size: 0.73rem;
+    color: #9ca3af;
+  }
+
+  .ai-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ai-ctrl-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+  }
+
+  .ai-ctrl-btn:hover {
+    background: rgba(255, 107, 0, 0.2);
+    border-color: var(--ai-orange);
+    color: #fff;
+  }
+
+  /* 對話歷史區 (Messages Scroll) */
+  .ai-messages-body {
+    flex: 1;
+    padding: 18px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+
+  .ai-messages-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  .ai-messages-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 107, 0, 0.3);
+    border-radius: 4px;
+  }
+
+  /* 訊息氣泡 */
+  .ai-msg-row {
+    display: flex;
+    gap: 10px;
+    max-width: 92%;
+    animation: msgFadeIn 0.3s ease-out;
+  }
+
+  @keyframes msgFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ai-msg-row.ai-side {
+    align-self: flex-start;
+  }
+
+  .ai-msg-row.user-side {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  .ai-msg-bubble {
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  .ai-side .ai-msg-bubble {
+    background: rgba(26, 26, 34, 0.94);
+    border: 1px solid rgba(255, 107, 0, 0.22);
+    color: #e5e7eb;
+    border-top-left-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  }
+
+  .user-side .ai-msg-bubble {
+    background: linear-gradient(135deg, var(--ai-orange) 0%, #ea580c 100%);
+    color: #ffffff;
+    border-top-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+    font-weight: 500;
+  }
+
+  /* 專案卡片導覽按鈕 (Project Nav Button) */
+  .ai-jump-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 9px 15px;
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.18), rgba(234, 88, 12, 0.35));
+    border: 1px solid var(--ai-orange);
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.25);
+    transition: all 0.25s ease;
+  }
+
+  .ai-jump-btn:hover {
+    background: linear-gradient(135deg, var(--ai-orange), #ea580c);
+    color: #ffffff !important;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5);
+  }
+
+  .ai-jump-btn .jump-icon {
+    font-size: 0.9rem;
+    animation: arrowBounce 1.5s infinite alternate;
+  }
+
+  @keyframes arrowBounce {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(3px); }
+  }
+
+  /* 項目亮點清單 */
+  .ai-bullet-list {
+    margin: 6px 0 2px 0;
+    padding-left: 18px;
+  }
+
+  .ai-bullet-list li {
+    margin-bottom: 4px;
+    color: #d1d5db;
+  }
+
+  .ai-bullet-list li strong {
+    color: var(--ai-orange-light, #ffedd5);
+  }
+
+  /* 快速提問標籤區 (Quick Chips) */
+  .ai-quick-dock {
+    padding: 8px 16px;
+    background: rgba(18, 18, 24, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .ai-quick-dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-chip {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 107, 0, 0.22);
+    color: #d1d5db;
+    font-size: 0.74rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .ai-chip:hover {
+    background: rgba(255, 107, 0, 0.18);
+    border-color: var(--ai-orange);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  /* 輸入框區域 */
+  .ai-chat-input-bar {
+    padding: 12px 16px;
+    background: rgba(20, 20, 27, 0.98);
+    border-top: 1px solid rgba(255, 107, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-input-field {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 9px 16px;
+    color: #ffffff;
+    font-size: 0.86rem;
+    outline: none;
+    font-family: inherit;
+    transition: all 0.25s;
+  }
+
+  .ai-input-field:focus {
+    border-color: var(--ai-orange);
+    box-shadow: 0 0 12px rgba(255, 107, 0, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .ai-input-field::placeholder {
+    color: #6b7280;
+  }
+
+  .ai-send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ai-orange), #ea580c);
+    border: none;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+
+  .ai-send-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(255, 107, 0, 0.6);
+  }
+
+  /* 打字機遊標與 Loading 點點 */
+  .ai-typing-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 14px;
+    background: var(--ai-orange);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blinkCursor 0.8s infinite;
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .ai-dots-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 0;
+  }
+
+  .ai-dots-indicator span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ai-orange);
+    animation: dotBounce 1.2s infinite ease-in-out;
+  }
+
+  .ai-dots-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .ai-dots-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1.1); opacity: 1; }
+  }
+
+  /* 目的地區塊高亮聚焦脈衝特效 */
+  .project-target-highlight {
+    position: relative;
+    animation: projectHighlightPulse 2.8s ease-out;
+  }
+
+  @keyframes projectHighlightPulse {
+    0% {
+      outline: 3px solid #ff6b00;
+      box-shadow: 0 0 50px rgba(255, 107, 0, 0.85);
+      transform: scale(1.01);
+    }
+    50% {
+      outline: 2px solid rgba(255, 107, 0, 0.6);
+      box-shadow: 0 0 35px rgba(255, 107, 0, 0.45);
+    }
+    100% {
+      outline: 2px solid transparent;
+      box-shadow: none;
+      transform: scale(1);
+    }
+  }
+
+  /* 手機響應式調整 */
+  @media (max-width: 640px) {
+    .ai-launcher-btn {
+      bottom: 20px;
+      right: 18px;
+      padding: 10px 14px;
+    }
+    .ai-launcher-sub {
+      display: none;
+    }
+    .ai-chat-window {
+      bottom: 80px;
+      right: 15px;
+      left: 15px;
+      width: auto;
+      height: 72vh;
+    }
+  }
+</style>
+
+<!-- 懸浮啟動鈕 -->
+<div class="ai-launcher-btn" id="aiLauncherBtn" onclick="toggleAIChat()">
+  <div class="ai-launcher-avatar">⚡</div>
+  <div class="ai-launcher-text">
+    <div class="ai-launcher-title">專案導覽 AI</div>
+    <div class="ai-launcher-sub">
+      <span class="ai-status-dot"></span> 點擊諮詢經歷與專案
+    </div>
+  </div>
+</div>
+
+<!-- 對話視窗主體 -->
+<div class="ai-chat-window" id="aiChatWindow">
+  <!-- Header -->
+  <div class="ai-chat-header">
+    <div class="ai-header-left">
+      <div class="ai-header-avatar">⚡</div>
+      <div class="ai-header-info">
+        <h4>陳弘明 · 專案智能導覽員</h4>
+        <span>工程經歷 · 證照工安 · 互動展示一鍵導航</span>
+      </div>
+    </div>
+    <div class="ai-header-actions">
+      <button class="ai-ctrl-btn" onclick="resetAIChat()" title="清空對話">🔄</button>
+      <button class="ai-ctrl-btn" onclick="toggleAIChat()" title="關閉視窗">✕</button>
+    </div>
+  </div>
+
+  <!-- Messages Body -->
+  <div class="ai-messages-body" id="aiMessagesBody">
+    <!-- 歡迎訊息由 JS 動態生成 -->
+  </div>
+
+  <!-- 快捷提問 Chips -->
+  <div class="ai-quick-dock" id="aiQuickDock">
+    <div class="ai-chip" onclick="handleQuickAsk('榮信現場工程經歷')">🏗️ 榮信現場高空專案</div>
+    <div class="ai-chip" onclick="handleQuickAsk('上銀科技精密組裝')">⚙️ 上銀精密製造歷練</div>
+    <div class="ai-chip" onclick="handleQuickAsk('水電機電產業分析')">⚡ 水電趨勢與區塊鏈</div>
+    <div class="ai-chip" onclick="handleQuickAsk('互動水族箱展示')">🐟 水族箱生態互動</div>
+    <div class="ai-chip" onclick="handleQuickAsk('工安證照與專業技能')">🦺 工安證照與技能</div>
+    <div class="ai-chip" onclick="handleQuickAsk('聯絡陳弘明')">📞 立即電話聯絡</div>
+  </div>
+
+  <!-- Input Bar -->
+  <div class="ai-chat-input-bar">
+    <input
+      type="text"
+      class="ai-input-field"
+      id="aiInputField"
+      placeholder="請輸入想詢問的專案、經歷或證照..."
+      onkeydown="if(event.key==='Enter') sendUserMessage()"
+    />
+    <button class="ai-send-btn" onclick="sendUserMessage()" title="發送訊息">➤</button>
+  </div>
+</div>
+
+<script>
+  /* ========================================================
+     陳弘明專案導覽 AI 引擎 (前端獨立輕量純 JS 實現)
+     ======================================================== */
+
+  // 專案知識庫與導航跳轉設定
+  const PROJECT_KNOWLEDGE_BASE = [
+    {
+      id: "rx-project",
+      keywords: ["榮信", "榮信企業社", "現場工程", "高空", "高空作業", "施作", "剪刀式", "自走式", "配管", "工地"],
+      title: "榮信企業社 · 現場工程與高空施作專案",
+      targetId: "experience",
+      replyHtml: `
+        <strong>【榮信企業社 — 現場工程人員 (2023 - 2026)】</strong><br>
+        陳弘明在榮信企業社負責多元建築與機電案場之第一線施作，具備高抗壓與高空機具專業：
+        <ul class="ai-bullet-list">
+          <li><strong>高空機具安全操作：</strong>持有合格證照，熟練操作剪刀式/自走式高空作業車，落實雙背負式防墜，保持<strong>零工安事故</strong>。</li>
+          <li><strong>水電配管與定位：</strong>依圖面施作強弱電管路配置、設備精準固定及接線，掌握嚴格安裝公差。</li>
+          <li><strong>跨工種障礙排除：</strong>現場遭遇管線干涉時，能迅速向主管回報並提出實務配合方案。</li>
+        </ul>
+      `,
+      btnText: "🚀 立即跳轉至「榮信企業社」工作經歷區",
+      btnUrl: "#experience"
+    },
+    {
+      id: "hiwin-project",
+      keywords: ["上銀", "上銀科技", "精密製造", "生產作業", "組裝", "品檢", "SOP", "5S", "線性滑軌", "滾珠螺桿"],
+      title: "上銀科技 · 精密製造與自主品檢歷練",
+      targetId: "experience",
+      replyHtml: `
+        <strong>【上銀科技股份有限公司 — 技術員/生產作業員 (2021 - 2024)】</strong><br>
+        於國際傳動元件領導大廠累積嚴格 SOP 與製造品管素養：
+        <ul class="ai-bullet-list">
+          <li><strong>SOP 標準化貫徹：</strong>負責關鍵零組件組裝、加工與調校，維持產線極高流暢度。</li>
+          <li><strong>自主品檢把關：</strong>工件外觀、微米尺寸規格自主檢測，落實異常品早期攔截。</li>
+          <li><strong>機台日常點檢與 5S：</strong>落實自主保養預防異常，維持高標準作業環境。</li>
+        </ul>
+      `,
+      btnText: "⚙️ 立即跳轉至「上銀科技」經歷展示區",
+      btnUrl: "#experience"
+    },
+    {
+      id: "industry-blockchain",
+      keywords: ["產業", "產業分析", "前瞻", "區塊鏈", "微電網", "綠電", "AMI", "智慧電表", "T-REC", "AI 算力", "散熱", "液冷", "淨零"],
+      title: "水電產業分析 · 數位前瞻與區塊鏈電網模擬",
+      targetId: "industry",
+      replyHtml: `
+        <strong>【水電機電產業分析與前瞻趨勢】</strong><br>
+        頁面專屬打造了四大支柱與分散式電網動態脈衝模擬：
+        <ul class="ai-bullet-list">
+          <li><strong>半導體與 AI 液冷：</strong>伺服器 Liquid Cooling 與高階機電無塵室施作標準。</li>
+          <li><strong>2050 淨零轉型：</strong>智慧電表 AMI、建築能效 BERS 與數位 EMS 能源管理。</li>
+          <li><strong>綠電交易區塊鏈：</strong>T-REC 綠電憑證智慧合約與 P2P 轉供數據防偽存證。</li>
+          <li><strong>內建動態模擬：</strong>包含可互動的能源流向 Canvas 與節點鏈結驗證。</li>
+        </ul>
+      `,
+      btnText: "⚡ 立即跳轉至「水電前瞻與區塊鏈」展示區",
+      btnUrl: "#industry"
+    },
+    {
+      id: "aquarium-lounge",
+      keywords: ["水族", "水族箱", "魚", "生態", "互動水族", "餵魚", "氣泡", "lounge", "娛樂", "休閒"],
+      title: "水族生態互動空間 (Interactive Aquarium)",
+      targetId: "aquarium",
+      replyHtml: `
+        <strong>【水族生態互動空間 (Canvas 動態系統)】</strong><br>
+        履歷特別設計了原生 HTML5 Canvas 仿生水族箱：
+        <ul class="ai-bullet-list">
+          <li><strong>互動飼料投餵：</strong>點擊水面投餵顆粒飼料，引導魚群聚集覓食。</li>
+          <li><strong>生態流體模擬：</strong>群聚趨性避障、環境音效、氣泡噴流與燈光情境切換。</li>
+          <li><strong>全螢幕觀賞：</strong>支援沉浸式水族休憩體驗。</li>
+        </ul>
+      `,
+      btnText: "🐟 立即跳轉至「水族生態互動空間」親自體驗",
+      btnUrl: "#aquarium"
+    },
+    {
+      id: "license-safety",
+      keywords: ["證照", "工安", "高空作業車", "操作證", "防墜", "職安", "安全", "OSHA", "法規"],
+      title: "工安證照與防墜自律標準",
+      targetId: "skills",
+      replyHtml: `
+        <strong>【合格工安證照與專業防護認知】</strong><br>
+        陳弘明具備現代案場最看重的工安持照資格與紀律：
+        <ul class="ai-bullet-list">
+          <li><strong>高空作業車操作合格證照：</strong>合法操作剪刀式及自走式高空作業車。</li>
+          <li><strong>嚴格防墜與工安自律：</strong>標準雙背負式安全帶、高空交管警戒。</li>
+          <li><strong>落實出工前檢查：</strong>工具儀表安全點檢，現場維持零職災。</li>
+        </ul>
+      `,
+      btnText: "🦺 立即跳轉至「證照與技能」展示區",
+      btnUrl: "#skills"
+    },
+    {
+      id: "education-bg",
+      keywords: ["學歷", "學校", "治平", "高中", "水電科", "科班", "水電技術科", "畢業"],
+      title: "治平高中水電技術科 · 科班工底",
+      targetId: "education",
+      replyHtml: `
+        <strong>【科班教育養成 — 治平高中水電技術科】</strong><br>
+        歷經三年完整扎實的實務科班訓練：
+        <ul class="ai-bullet-list">
+          <li>室內配線工程實習、電氣法規與儀表量測。</li>
+          <li>給排水配管基礎、手電動工具安全操作。</li>
+          <li>奠定紮實的水電實務判讀與工程施工根基。</li>
+        </ul>
+      `,
+      btnText: "🎓 立即跳轉至「學歷背景」專區",
+      btnUrl: "#education"
+    },
+    {
+      id: "contact-info",
+      keywords: ["聯絡", "電話", "手機", "email", "信箱", "找弘明", "派工", "面試", "地址", "桃園"],
+      title: "聯絡陳弘明 · 洽談合作或工程派工",
+      targetId: "hero",
+      replyHtml: `
+        <strong>【陳弘明 聯絡資訊】</strong><br>
+        隨時歡迎工程業界長官與合作夥伴洽詢：
+        <ul class="ai-bullet-list">
+          <li><strong>聯絡電話：</strong><a href="tel:0903333611" style="color:#ff9f43;text-decoration:underline;">0903-333-611</a>（點擊可直接撥號）</li>
+          <li><strong>電子郵件：</strong><a href="mailto:a0903333611@icloud.com" style="color:#ff9f43;text-decoration:underline;">a0903333611@icloud.com</a></li>
+          <li><strong>作業地區：</strong>桃園市桃園區（可配合作業派工調度）</li>
+        </ul>
+      `,
+      btnText: "📞 前往首頁聯絡列 / 立即電話洽詢",
+      btnUrl: "tel:0903333611"
+    }
+  ];
+
+  // 狀態管理
+  let isChatOpen = false;
+  let isAITyping = false;
+
+  // 切換對話視窗開關
+  function toggleAIChat() {
+    isChatOpen = !isChatOpen;
+    const chatWin = document.getElementById('aiChatWindow');
+    if (isChatOpen) {
+      chatWin.classList.add('active');
+      const messagesBody = document.getElementById('aiMessagesBody');
+      if (messagesBody.children.length === 0) {
+        initWelcomeMessage();
+      }
+      setTimeout(() => document.getElementById('aiInputField').focus(), 300);
+    } else {
+      chatWin.classList.remove('active');
+    }
+  }
+
+  // 歡迎開場訊息
+  function initWelcomeMessage() {
+    const welcomeHtml = `
+      您好！我是陳弘明的 <strong>AI 專案導覽助手</strong> ⚡<br>
+      我熟悉陳弘明的<strong>工程實務、上銀精密製造、工安證照</strong>以及本站的<strong>產業前瞻趨勢與水族互動展示</strong>。<br><br>
+      您可以點選下方快捷標籤，或直接詢問我任何問題，我會為您詳細解說並提供<strong>一鍵跳轉至專案展示區</strong>的按鈕！
+    `;
+    renderAIMessage(welcomeHtml, true);
+  }
+
+  // 重設對話
+  function resetAIChat() {
+    const messagesBody = document.getElementById('aiMessagesBody');
+    messagesBody.innerHTML = '';
+    initWelcomeMessage();
+  }
+
+  // 快捷提問
+  function handleQuickAsk(text) {
+    if (isAITyping) return;
+    document.getElementById('aiInputField').value = text;
+    sendUserMessage();
+  }
+
+  // 訪客發送訊息
+  function sendUserMessage() {
+    if (isAITyping) return;
+    const input = document.getElementById('aiInputField');
+    const text = input.value.trim();
+    if (!text) return;
+
+    // 渲染訪客訊息
+    renderUserMessage(text);
+    input.value = '';
+
+    // 思考並回答
+    triggerAIResponse(text);
+  }
+
+  // 渲染訪客氣泡
+  function renderUserMessage(text) {
+    const messagesBody = document.getElementById('aiMessagesBody');
+    const row = document.createElement('div');
+    row.className = 'ai-msg-row user-side';
+    row.innerHTML = `<div class="ai-msg-bubble">${escapeHtml(text)}</div>`;
+    messagesBody.appendChild(row);
+    messagesBody.scrollTop = messagesBody.scrollHeight;
+  }
+
+  // AI 智能應答與打字機效果
+  function triggerAIResponse(userInput) {
+    isAITyping = true;
+    const messagesBody = document.getElementById('aiMessagesBody');
+
+    // 顯示思考中的 Loading 點點
+    const loadingRow = document.createElement('div');
+    loadingRow.className = 'ai-msg-row ai-side';
+    loadingRow.id = 'aiTypingIndicator';
+    loadingRow.innerHTML = `
+      <div class="ai-msg-bubble">
+        <div class="ai-dots-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    `;
+    messagesBody.appendChild(loadingRow);
+    messagesBody.scrollTop = messagesBody.scrollHeight;
+
+    // 模擬網路延遲與自然反應 (400ms - 800ms)
+    setTimeout(() => {
+      // 移除思考指示器
+      const indicator = document.getElementById('aiTypingIndicator');
+      if (indicator) indicator.remove();
+
+      // 比對知識庫
+      const matched = matchKnowledge(userInput);
+      renderAIMessageWithTyping(matched);
+    }, 600);
+  }
+
+  // 知識庫比對邏輯 (關鍵字匹配 + 權重計算)
+  function matchKnowledge(query) {
+    const cleanQuery = query.toLowerCase();
+
+    // 尋找最高分匹配項
+    let bestMatch = null;
+    let highestScore = 0;
+
+    for (const item of PROJECT_KNOWLEDGE_BASE) {
+      let score = 0;
+      for (const kw of item.keywords) {
+        if (cleanQuery.includes(kw.toLowerCase())) {
+          score += kw.length; // 越長匹配權重越高
+        }
+      }
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = item;
+      }
+    }
+
+    if (bestMatch && highestScore > 0) {
+      return bestMatch;
+    }
+
+    // 兜底智能回答
+    return {
+      title: "專案概覽與指引",
+      replyHtml: `
+        陳弘明的工程履歷主要涵蓋以下核心項目：
+        <ul class="ai-bullet-list">
+          <li><strong>榮信企業社：</strong>現場水電工程與自走式高空作業車施作（零工安事故）。</li>
+          <li><strong>上銀科技：</strong>精密零組件組裝作業、自主品檢與 SOP 5S 標準落實。</li>
+          <li><strong>專業證照：</strong>高空作業車合格操作證照、治平水電技術科科班工底。</li>
+          <li><strong>前瞻互動：</strong>水電產業 2050 淨零分析、區塊鏈模擬與 Canvas 互動水族箱。</li>
+        </ul>
+        您可以點選下方按鈕前往「工作經歷」與「專案總覽」深入瀏覽！
+      `,
+      btnText: "📋 前往查看「完整經歷與專案區」",
+      btnUrl: "#experience",
+      targetId: "experience"
+    };
+  }
+
+  // 帶打字機效果渲染 AI 訊息
+  function renderAIMessageWithTyping(matchedData) {
+    const messagesBody = document.getElementById('aiMessagesBody');
+    const row = document.createElement('div');
+    row.className = 'ai-msg-row ai-side';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble';
+    row.appendChild(bubble);
+    messagesBody.appendChild(row);
+
+    const fullHtml = matchedData.replyHtml;
+    const btnHtml = matchedData.btnUrl ? `
+      <br>
+      <a href="${matchedData.btnUrl}" class="ai-jump-btn" onclick="handleProjectJump('${matchedData.targetId}', event)">
+        <span>${matchedData.btnText}</span>
+        <span class="jump-icon">➔</span>
+      </a>
+    ` : '';
+
+    // 打字效果：透過逐段 HTML 解析與平滑呈現
+    let currentLen = 0;
+    const plainText = fullHtml.replace(/<[^>]*>/g, '');
+    const totalChars = plainText.length;
+    
+    // 平滑漸顯動畫
+    bubble.innerHTML = fullHtml + btnHtml;
+    bubble.style.opacity = '0';
+    bubble.style.transform = 'translateY(8px)';
+    bubble.style.transition = 'all 0.35s ease';
+
+    requestAnimationFrame(() => {
+      bubble.style.opacity = '1';
+      bubble.style.transform = 'translateY(0)';
+      messagesBody.scrollTop = messagesBody.scrollHeight;
+      isAITyping = false;
+    });
+  }
+
+  // 直接渲染靜態 AI 訊息 (如歡迎詞)
+  function renderAIMessage(htmlContent) {
+    const messagesBody = document.getElementById('aiMessagesBody');
+    const row = document.createElement('div');
+    row.className = 'ai-msg-row ai-side';
+    row.innerHTML = `<div class="ai-msg-bubble">${htmlContent}</div>`;
+    messagesBody.appendChild(row);
+    messagesBody.scrollTop = messagesBody.scrollHeight;
+  }
+
+  // 核心專案導覽連動：平滑跳轉 + 目標區塊脈衝聚焦
+  function handleProjectJump(targetId, evt) {
+    if (!targetId) return;
+
+    // 若點擊電話等外部協定則直接允許
+    if (targetId.startsWith('tel:') || targetId.startsWith('mailto:')) {
+      return;
+    }
+
+    if (evt) evt.preventDefault();
+
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      // 1. 平滑捲動至目標元素 (保留頂部導航列 80px 偏移)
+      const elementPos = targetElement.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPos = elementPos - 75;
+
+      window.scrollTo({
+        top: offsetPos,
+        behavior: 'smooth'
+      });
+
+      // 2. 觸發醒目的高科技發光脈衝動畫 (Pulse Highlight)
+      targetElement.classList.remove('project-target-highlight');
+      void targetElement.offsetWidth; // 強制重繪
+      targetElement.classList.add('project-target-highlight');
+
+      // 3. 在手機螢幕下可友善關閉或保留
+      if (window.innerWidth <= 640) {
+        toggleAIChat();
+      }
+    } else {
+      // 若在不同頁面，直接跳轉錨點
+      window.location.hash = targetId;
+    }
+  }
+
+  // 工具函式：跳脫 HTML
+  function escapeHtml(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  }
+</script>
+
 </body>
 </html>
+
+
